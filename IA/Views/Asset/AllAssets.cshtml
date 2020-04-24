@@ -1,0 +1,21 @@
+﻿@model IA.ViewModels.AllAssetsVM
+
+<div class="all-assets-container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th >Title</th>
+            <th >Ticker</th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var asset in Model.Assets)
+            {
+                <tr>
+                    <td><a class="asset-link" data-asset-id="@asset.Id">@asset.Title</a></td>
+                    <td>@asset.Ticker</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

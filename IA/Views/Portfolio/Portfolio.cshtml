@@ -1,0 +1,8 @@
+﻿@using IA.ViewModels
+@model IA.ViewModels.PortfolioVM
+
+
+<div class="portfolio-container">
+    <div><h2>@Model.Title</h2></div>
+    <partial name="~/Views/Transaction/AllTransactions.cshtml" model ="@new AllTransactionsVM() { Transactions = Model.Transactions}"/>
+</div>

@@ -1,0 +1,29 @@
+﻿@model IA.ViewModels.AllTransactionsVM
+
+<div class="all-assets-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Asset</th>
+                <th>Open Price</th>
+                <th>Open Date (UTC)</th>
+                <th>Amount</th>
+                <th>Commission</th>
+                <th>Currency</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var transaction in Model.Transactions)
+        {
+            <tr>
+                <td>@transaction.Asset.Title (@transaction.Asset.Ticker)</td>
+                <td>@transaction.OpenPrice</td>
+                <td>@transaction.OpenDateUtc</td>
+                <td>@transaction.Amount</td>
+                <td>@transaction.Commission</td>
+                <td>@transaction.Currency</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

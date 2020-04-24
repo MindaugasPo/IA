@@ -1,0 +1,29 @@
+﻿@model IA.ViewModels.AssetPricesVM
+
+<div>@Model.Asset.Title Prices</div>
+
+<div class="all-asset-prices">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Open Price</th>
+            <th>High Price</th>
+            <th>Low Price</th>
+            <th>Close Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var assetPrice in Model.AssetPrices)
+        {
+            <tr>
+                <td>@assetPrice.Date.ToString("yyyy-mm-dd")</td>
+                <td>@assetPrice.OpenPrice</td>
+                <td>@assetPrice.HighPrice</td>
+                <td>@assetPrice.LowPrice</td>
+                <td>@assetPrice.ClosePrice</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
