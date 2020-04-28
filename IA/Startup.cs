@@ -74,12 +74,12 @@ namespace IA
             if (_env.IsDevelopment())
             {
                 services.AddDbContext<IAContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("IADB1_prod")));
+                    options.UseSqlServer(Configuration.GetConnectionString("IADB1_dev")));
             }
             else
             {
                 services.AddDbContext<IAContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("IADB1_prod")));
+                    options.UseSqlServer(Configuration.GetConnectionString("IADB1_dev")));
             }
         }
 
