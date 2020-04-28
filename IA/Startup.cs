@@ -18,9 +18,11 @@ namespace IA
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IWebHostEnvironment _env;
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -35,9 +37,7 @@ namespace IA
 
             services.AddControllersWithViews();
 
-            services.AddDbContext<IAContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("IADatabase")));
-
+            RegisterDbContexts(services);
             RegisterIaServices(services);
             RegisterIaBusiness(services);
             RegisterFinancialDataClient(services);
@@ -66,6 +66,21 @@ namespace IA
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+
+        private void RegisterDbContexts(IServiceCollection services)
+        {
+            if (_env.IsDevelopment())
+            {
+                services.AddDbContext<IAContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("IADB1_local")));
+            }
+            else
+            {
+                services.AddDbContext<IAContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("IADB1")));
+            }
         }
 
         private void RegisterIaServices(IServiceCollection services)

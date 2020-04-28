@@ -1,7 +1,7 @@
-﻿create database IA
+﻿create database IADB1
 GO
 
-create table [IA].[dbo].[Assets](
+create table [IADB1].[dbo].[Assets](
 	Id uniqueidentifier PRIMARY KEY,
 	Title nvarchar(200) not null,
 	Ticker nvarchar(10) null,
@@ -10,17 +10,17 @@ create table [IA].[dbo].[Assets](
 )
 GO
 
-create table [IA].[dbo].[Version] (
+create table [IADB1].[dbo].[Version] (
 	[Key] nvarchar(10),
 	[Value] int
 )
 GO
 
-insert into [IA].[dbo].[Version] 
+insert into [IADB1].[dbo].[Version] 
 ([Key], [Value]) values ('DbVersion', 1)
 GO
 
-create table [IA].[dbo].[Portfolios] (
+create table [IADB1].[dbo].[Portfolios] (
 	Id uniqueidentifier,
 	Title nvarchar(50) not null,
 	CreatedDateUtc datetime2 not null,
@@ -28,7 +28,7 @@ create table [IA].[dbo].[Portfolios] (
 )
 GO
 
-create table [IA].[dbo].[Transactions](
+create table [IADB1].[dbo].[Transactions](
 	Id uniqueidentifier,
 	AssetId uniqueidentifier not null,
 	PortfolioId uniqueidentifier not null,
@@ -47,12 +47,12 @@ create table [IA].[dbo].[Transactions](
 )
 GO
 
-update [IA].[dbo].[Version]
+update [IADB1].[dbo].[Version]
 set [Value] = 2
 where [Key] = 'DbVersion'
 GO
 
-create table [IA].[dbo].[AssetPrices] (
+create table [IADB1].[dbo].[AssetPrices] (
 	Id uniqueidentifier,
 	AssetId uniqueidentifier not null,
 	[Date] datetime2 not null,
@@ -65,7 +65,7 @@ create table [IA].[dbo].[AssetPrices] (
 	constraint FK_AssetPrices_Assets foreign key (AssetId) references Assets (Id),
 )
 
-update [IA].[dbo].[Version]
+update [IADB1].[dbo].[Version]
 set [Value] = 3
 where [Key] = 'DbVersion'
 GO
