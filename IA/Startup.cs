@@ -71,7 +71,7 @@ namespace IA
 
         private void RegisterDbContexts(IServiceCollection services)
         {
-            if (false && _env.IsDevelopment())
+            if (_env.IsDevelopment())
             {
                 services.AddDbContext<IAContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("IADB1_dev")));
