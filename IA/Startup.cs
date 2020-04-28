@@ -97,7 +97,7 @@ namespace IA
 
         private void RegisterFinancialDataClient(IServiceCollection services)
         {
-            services.AddScoped<IFinDataClient>(x => new FinDataClient(Configuration.GetConnectionString("IADatabase")));
+            //services.AddScoped<IFinDataClient>(x => new FinDataClient(Configuration.GetConnectionString("IADatabase")));
         }
     }
 }
