@@ -78,8 +78,6 @@ namespace IA
             }
             else
             {
-                //services.AddDbContext<IAContext>(options =>
-                //    options.UseSqlServer(Configuration["ConnectionStrings:IADB1_prod"]));
                 services.AddDbContext<IAContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("IADB1_prod")));
             }
