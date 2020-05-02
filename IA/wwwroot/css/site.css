@@ -74,3 +74,7 @@ nav.main-menu a,
 main a {
     cursor: pointer;
 }
+
+.portfolio-controls {
+    padding-bottom: 8px;
+}

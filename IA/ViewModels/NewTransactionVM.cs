@@ -6,10 +6,9 @@ using Types.DTO;
 
 namespace IA.ViewModels
 {
-    public class PortfolioVM
+    public class NewTransactionVM
     {
         public Guid PortfolioId { get; set; }
-        public string Title { get; set; }
-        public List<TransactionDto> Transactions { get; set; }
+        public List<AssetDto> Assets { get; set; }
     }
 }

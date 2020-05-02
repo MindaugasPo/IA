@@ -1,4 +1,33 @@
 ﻿$(document).ready(function () {
+    function fillMain(result) {
+        if (result) {
+            $("main").html(result);
+        }
+    }
+
+    $(document).on("click", "#submit-new-transaction-form", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        Ajax("POST",
+            "/Transaction/Create",
+            $("#new-transaction-form").serialize(),
+            fillMain
+        );
+    });
+
+    $(document).on("click", "#new-position", function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        Ajax(
+            "GET",
+            "/Transaction/Create",
+            { "PortfolioId": $("#PortfolioId").val() },
+            fillMain
+        );
+    });
+
     $(document).on("click", ".asset-link", function(event) {
         event.preventDefault();
         event.stopPropagation();
@@ -7,11 +36,8 @@
             "GET",
             "/Asset/GetAssetPrices",
             { "id": $(this).data("asset-id") },
-            function (result) {
-                if (result) {
-                    $("main").html(result);
-                }
-            });
+            fillMain
+        );
     });
     $("#main-menu-assets").on("click", function(event) {
         event.preventDefault();
@@ -21,11 +47,8 @@
             "GET",
             "/Asset/GetAll",
             {},
-            function(result) {
-                if (result) {
-                    $("main").html(result);
-                }
-            });
+            fillMain
+        );
     });
 
     $("#main-menu-transactions").on("click", function (event) {
@@ -36,11 +59,8 @@
             "GET",
             "/Transaction/GetAll",
             {},
-            function (result) {
-                if (result) {
-                    $("main").html(result);
-                }
-            });
+            fillMain
+        );
     });
 
     $("#main-menu-portfolio").on("click", function (event) {
@@ -51,11 +71,8 @@
             "GET",
             "/Portfolio/Get",
             { "id": "3DA15C4C-D24D-4881-94FE-AF666FE835EB" },
-            function (result) {
-                if (result) {
-                    $("main").html(result);
-                }
-            });
+            fillMain
+        );
     });
 });
 

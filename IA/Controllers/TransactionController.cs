@@ -5,16 +5,20 @@ using System.Threading.Tasks;
 using IA.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using Types.DTO;
 
 namespace IA.Controllers
 {
     public class TransactionController : Controller
     {
         private readonly ITransactionService _transactionService;
+        private readonly IAssetService _assetService;
         public TransactionController(
-            ITransactionService transactionService)
+            ITransactionService transactionService,
+            IAssetService assetService)
         {
             _transactionService = transactionService;
+            _assetService = assetService;
         }
 
         [HttpGet]
@@ -25,6 +29,23 @@ namespace IA.Controllers
                 Transactions = _transactionService.GetAll().ToList()
             };
             return PartialView("~/Views/Transaction/AllTransactions.cshtml", vm);
+        }
+
+        [HttpGet]
+        public IActionResult Create(Guid PortfolioId)
+        {
+            var vm = new NewTransactionVM()
+            {
+                PortfolioId = PortfolioId,
+                Assets = _assetService.GetAll().ToList()
+            };
+            return PartialView("~/Views/Transaction/NewTransaction.cshtml", vm);
+        }
+
+        [HttpPost]
+        public IActionResult Create(TransactionDto transaction)
+        {
+            return new JsonResult("Will be created");
         }
     }
 }

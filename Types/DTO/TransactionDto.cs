@@ -14,6 +14,8 @@ namespace Types.DTO
         public IAenums.Currency Currency { get; set; }
         public decimal? ClosePrice { get; set; }
         public DateTime? CloseDateUtc { get; set; }
+        public Guid AssetId { get; set; }
         public AssetDto Asset { get; set; }
+        public Guid PortfolioId { get; set; }
     }
 }

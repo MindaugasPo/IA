@@ -22,6 +22,7 @@ namespace IA.Controllers
             var portfolio = _portfolioService.GetCurrent(id);
             var vm = new PortfolioVM()
             {
+                PortfolioId = id,
                 Title = portfolio.Title,
                 Transactions = portfolio.Transactions
             };

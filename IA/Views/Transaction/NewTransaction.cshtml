@@ -1,0 +1,65 @@
+﻿@model IA.ViewModels.NewTransactionVM
+
+<div id="new-transaction-container">
+    <form id="new-transaction-form">
+        <input id="PortfolioId" type="text" class="d-none" name="PortfolioId" value="@Model.PortfolioId"/>
+        <div class="container">
+            <div class="row">
+                <div class="form-group col-4">
+                    <label for="AssetId">Asset</label>
+                    <select id="AssetId" name="AssetId" class="custom-select">
+                        @foreach (var asset in Model.Assets)
+                        {
+                            <option value="@asset.Id">@asset.Title</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-4">
+                    <label for="Type">Type</label>
+                    <select id="Type" name="Type" class="custom-select">
+                        <option value="1">Long</option>
+                        <option value="2">Short</option>
+                    </select>
+                </div>
+                <div class="form-group col-4">
+                    <label for="Currency">Currency</label>
+                    <select id="Currency" name="Currency" class="custom-select">
+                        <option value="1">EUR</option>
+                        <option selected value="2">USD</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-6">
+                    <label for="OpenDate">Open Date (UTC)</label>
+                    <input id="OpenDate" type="text" class="form-control" name="OpenDate"/>
+                </div>
+                <div class="form-group col-6">
+                    <label for="CloseDate">Close Date (UTC)</label>
+                    <input id="CloseDate" type="text" class="form-control" name="CloseDate"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-6">
+                    <label for="OpenPrice">Open Price</label>
+                    <input id="OpenPrice" type="text" class="form-control" name="OpenPrice"/>
+                </div>
+                <div class="form-group col-6">
+                    <label for="ClosePrice">Close Price</label>
+                    <input id="ClosePrice" type="text" class="form-control" name="ClosePrice"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-6">
+                    <label for="Amount">Amount</label>
+                    <input id="Amount" type="text" class="form-control" name="Amount"/>
+                </div>
+                <div class="form-group col-6">
+                    <label for="Commission">Commission</label>
+                    <input id="Commission" type="text" class="form-control" name="Commission"/>
+                </div>
+            </div>
+            <button id="submit-new-transaction-form" class="btn btn-primary">Create Transaction</button>
+        </div>
+    </form>
+</div>
