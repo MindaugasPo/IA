@@ -13,6 +13,7 @@ namespace Services
     public interface ITransactionService
     {
         IEnumerable<TransactionDto> GetAll();
+        void Create(TransactionDto transactionDto);
     }
     public class TransactionService : BaseService, ITransactionService
     {
@@ -28,6 +29,13 @@ namespace Services
             return _context.Transactions
                 .Include(x => x.Asset)
                 .Select(x => _mapper.Map<Transaction, TransactionDto>(x));
+        }
+
+        public void Create(TransactionDto transactionDto)
+        {
+            var transaction = _mapper.Map<TransactionDto, Transaction>(transactionDto);
+            _context.Transactions.Add(transaction);
+            _context.SaveChanges();
         }
     }
 }

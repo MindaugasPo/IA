@@ -13,6 +13,7 @@ namespace Services
         {
             CreateMap<Asset, AssetDto>();
             CreateMap<Transaction, TransactionDto>();
+            CreateMap<TransactionDto, Transaction>();
             CreateMap<Portfolio, PortfolioDto>();
             CreateMap<AssetPrice, AssetPriceDto>();
         }

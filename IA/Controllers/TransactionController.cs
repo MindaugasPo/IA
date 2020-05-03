@@ -45,7 +45,8 @@ namespace IA.Controllers
         [HttpPost]
         public IActionResult Create(TransactionDto transaction)
         {
-            return new JsonResult("Will be created");
+            _transactionService.Create(transaction);
+            return new JsonResult("Created");
         }
     }
 }

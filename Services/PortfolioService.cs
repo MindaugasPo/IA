@@ -33,7 +33,7 @@ namespace Services
             return _context.Portfolios
                 .Include(x => x.Transactions)
                 .ThenInclude(x => x.Asset)
-                .Single(x => x.Id == id);
+                .SingleOrDefault(x => x.Id == id);
         }
 
         public PortfolioDto Get(Guid id)
@@ -45,6 +45,10 @@ namespace Services
         public PortfolioDto GetCurrent(Guid id)
         {
             var portfolio = GetPortfolioWithAllTransactions(id);
+            if (portfolio == null)
+            {
+                return null;
+            }
             var currentPortfolio = _portfolioBusiness.GetCurrentPortfolio(portfolio);
             return _mapper.Map<Portfolio, PortfolioDto>(currentPortfolio);
         }

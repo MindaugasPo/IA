@@ -20,6 +20,12 @@ namespace IA.Controllers
         public IActionResult Get(Guid id)
         {
             var portfolio = _portfolioService.GetCurrent(id);
+
+            if (portfolio == null)
+            {
+                return new JsonResult("Portfolio was not found");
+            }
+
             var vm = new PortfolioVM()
             {
                 PortfolioId = id,

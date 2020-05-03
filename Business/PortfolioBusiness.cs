@@ -14,7 +14,7 @@ namespace Business
     {
         public Portfolio GetCurrentPortfolio(Portfolio portfolio)
         {
-            portfolio.Transactions = portfolio.Transactions.Where(x => x.CloseDateUtc != null).ToList();
+            portfolio.Transactions = portfolio.Transactions.Where(x => x.CloseDateUtc == null).ToList();
             return portfolio;
         }
     }

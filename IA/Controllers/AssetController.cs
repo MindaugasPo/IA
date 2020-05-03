@@ -34,10 +34,15 @@ namespace IA.Controllers
         public IActionResult GetAssetPrices(Guid id)
         {
             var asset = _assetService.Get(id);
-            var assetPrices = _assetService.GetAssetPrices(id);
+
+            if (asset == null)
+            {
+                return new JsonResult("Asset was not found");
+            }
+
             var vm = new AssetPricesVM()
             {
-                Asset = _assetService.Get(id),
+                Asset = asset,
                 AssetPrices = _assetService.GetAssetPrices(id).ToList()
             };
             return PartialView("~/Views/Asset/AssetPrices.cshtml", vm);
