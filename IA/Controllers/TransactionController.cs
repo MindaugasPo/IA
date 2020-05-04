@@ -6,6 +6,7 @@ using IA.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using Types.DTO;
+using ValidationService;
 
 namespace IA.Controllers
 {
@@ -13,12 +14,15 @@ namespace IA.Controllers
     {
         private readonly ITransactionService _transactionService;
         private readonly IAssetService _assetService;
+        private readonly IAValidatorFactory _validatorFactory;
         public TransactionController(
             ITransactionService transactionService,
-            IAssetService assetService)
+            IAssetService assetService,
+            IAValidatorFactory validatorFactory)
         {
             _transactionService = transactionService;
             _assetService = assetService;
+            _validatorFactory = validatorFactory;
         }
 
         [HttpGet]
@@ -45,6 +49,11 @@ namespace IA.Controllers
         [HttpPost]
         public IActionResult Create(TransactionDto transaction)
         {
+            if (!_validatorFactory.GetValidator(transaction).IsValid())
+            {
+                return new JsonResult("Transaction is not valid");
+            }
+
             _transactionService.Create(transaction);
             return new JsonResult("Created");
         }

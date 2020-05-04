@@ -13,6 +13,7 @@ using AutoMapper;
 using Business;
 using FinancialDataClient;
 using Services;
+using ValidationService;
 
 namespace IA
 {
@@ -33,6 +34,7 @@ namespace IA
             services.AddRazorPages()
                 .AddRazorRuntimeCompilation();
 
+            services.AddSingleton<IAValidatorFactory, ValidatorFactory>();
             services.AddAutoMapper(typeof(AutoMapperConfigurations));
 
             services.AddControllersWithViews();
