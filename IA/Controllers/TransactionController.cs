@@ -30,7 +30,8 @@ namespace IA.Controllers
         {
             var vm = new AllTransactionsVM()
             {
-                Transactions = _transactionService.GetAll().ToList()
+                Transactions = _transactionService.GetAll().ToList(),
+                DisplayCloseData = true
             };
             return PartialView("~/Views/Transaction/AllTransactions.cshtml", vm);
         }
@@ -56,6 +57,13 @@ namespace IA.Controllers
 
             _transactionService.Create(transaction);
             return new JsonResult("Created");
+        }
+
+        [HttpPost]
+        public IActionResult Close(Guid id, decimal closePrice)
+        {
+            _transactionService.Close(id, closePrice);
+            return new JsonResult("Closed");
         }
     }
 }

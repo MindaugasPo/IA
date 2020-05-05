@@ -1,7 +1,7 @@
 ﻿@model IA.ViewModels.AllTransactionsVM
 
 <div class="all-assets-container">
-    <table class="table">
+    <table class="table table-hover">
         <thead>
             <tr>
                 <th>Asset</th>
@@ -10,18 +10,38 @@
                 <th>Amount</th>
                 <th>Commission</th>
                 <th>Currency</th>
+                @if (Model.DisplayCloseData)
+                {
+                    <th>Close Date (UTC)</th>
+                }
+                <th>Close Price</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
         @foreach (var transaction in Model.Transactions)
         {
-            <tr>
+            <tr id="@("tr-" + @transaction.Id)">
                 <td>@transaction.Asset.Title (@transaction.Asset.Ticker)</td>
                 <td>@transaction.OpenPrice</td>
                 <td>@transaction.OpenDateUtc</td>
                 <td>@transaction.Amount</td>
                 <td>@transaction.Commission</td>
                 <td>@transaction.Currency</td>
+                @if (Model.DisplayCloseData)
+                {
+                    <td>@transaction.CloseDateUtc</td>
+                }
+                @if (transaction.CloseDateUtc == null)
+                {
+                    <td><input id="@("close-price-" + transaction.Id)" type="text" class="form-control"></td>
+                    <td><button type="button" class="btn btn-link close-position" data-transaction-id="@transaction.Id">Close</button></td>
+                }
+                else
+                {
+                    <td>@transaction.ClosePrice</td>
+                }
+
             </tr>
         }
         </tbody>

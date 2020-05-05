@@ -14,6 +14,7 @@ namespace Services
     {
         IEnumerable<TransactionDto> GetAll();
         void Create(TransactionDto transactionDto);
+        void Close(Guid id, decimal closePrice);
     }
     public class TransactionService : BaseService, ITransactionService
     {
@@ -35,6 +36,17 @@ namespace Services
         {
             var transaction = _mapper.Map<TransactionDto, Transaction>(transactionDto);
             _context.Transactions.Add(transaction);
+            _context.SaveChanges();
+        }
+
+        public void Close(Guid id, decimal closePrice)
+        {
+            var transaction = _context.Transactions.SingleOrDefault(x => x.Id == id);
+            if (transaction != null)
+            {
+                transaction.CloseDateUtc = DateTime.UtcNow;
+                transaction.ClosePrice = closePrice;
+            }
             _context.SaveChanges();
         }
     }

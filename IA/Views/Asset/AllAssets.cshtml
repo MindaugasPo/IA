@@ -1,11 +1,12 @@
 ﻿@model IA.ViewModels.AllAssetsVM
 
 <div class="all-assets-container">
-    <table class="table">
+    <table class="table  table-hover">
         <thead>
         <tr>
-            <th >Title</th>
-            <th >Ticker</th>
+            <th>Title</th>
+            <th>Ticker</th>
+            <th>Type</th>
         </tr>
         </thead>
         <tbody>
@@ -14,6 +15,7 @@
                 <tr>
                     <td><a class="asset-link" data-asset-id="@asset.Id">@asset.Title</a></td>
                     <td>@asset.Ticker</td>
+                    <td>@asset.AssetType.ToString()</td>
                 </tr>
             }
         </tbody>

@@ -12,5 +12,5 @@
             <button id="new-position" class="btn btn-primary">New position</button>
         </div>
 
-        <partial name="~/Views/Transaction/AllTransactions.cshtml" model="@new AllTransactionsVM() { Transactions = Model.Transactions}" />
+        <partial name="~/Views/Transaction/AllTransactions.cshtml" model="@new AllTransactionsVM() { Transactions = Model.Transactions, DisplayCloseData = false}" />
     </div>
