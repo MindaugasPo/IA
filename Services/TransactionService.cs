@@ -57,6 +57,7 @@ namespace Services
             if (transaction != null)
             {
                 _context.Transactions.Remove(transaction);
+                _context.SaveChanges();
             }
         }
     }
