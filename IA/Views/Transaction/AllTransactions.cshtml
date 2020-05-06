@@ -16,6 +16,7 @@
                 }
                 <th>Close Price</th>
                 <th></th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -40,7 +41,9 @@
                 else
                 {
                     <td>@transaction.ClosePrice</td>
+                    <td></td>
                 }
+                <td><button type="button" class="btn btn-link delete-position" data-transaction-id="@transaction.Id">Delete</button></td>
 
             </tr>
         }

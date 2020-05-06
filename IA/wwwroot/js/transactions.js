@@ -6,7 +6,9 @@
         Ajax("POST",
             "/Transaction/Create",
             $("#new-transaction-form").serialize(),
-            fillMain
+            function (result) {
+                $("#main-menu-portfolio").trigger("click");
+            }
         );
     });
 
@@ -19,6 +21,26 @@
             "/Transaction/Create",
             { "PortfolioId": $("#PortfolioId").val() },
             fillMain
+        );
+    });
+
+    $(document).on("click", ".delete-position", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        var transactionId = $(this).data("transaction-id");
+
+        Ajax(
+            "POST",
+            "/Transaction/Delete",
+            { "id": transactionId },
+            function (result) {
+                if (result) {
+                    $("#tr-" + transactionId).remove();
+                } else {
+                    fillMain("Delete transaction failed");
+                }
+            }
         );
     });
 

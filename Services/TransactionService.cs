@@ -15,6 +15,7 @@ namespace Services
         IEnumerable<TransactionDto> GetAll();
         void Create(TransactionDto transactionDto);
         void Close(Guid id, decimal closePrice);
+        void Delete(Guid id);
     }
     public class TransactionService : BaseService, ITransactionService
     {
@@ -48,6 +49,15 @@ namespace Services
                 transaction.ClosePrice = closePrice;
             }
             _context.SaveChanges();
+        }
+
+        public void Delete(Guid id)
+        {
+            var transaction = _context.Transactions.SingleOrDefault(x => x.Id == id);
+            if (transaction != null)
+            {
+                _context.Transactions.Remove(transaction);
+            }
         }
     }
 }

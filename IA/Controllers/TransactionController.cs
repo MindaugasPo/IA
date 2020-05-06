@@ -65,5 +65,12 @@ namespace IA.Controllers
             _transactionService.Close(id, closePrice);
             return new JsonResult("Closed");
         }
+
+        [HttpPost]
+        public IActionResult Delete(Guid id)
+        {
+            _transactionService.Delete(id);
+            return new JsonResult("Deleted");
+        }
     }
 }
