@@ -75,6 +75,7 @@ main a {
     cursor: pointer;
 }
 
-.portfolio-controls {
+.portfolio-controls,
+.asset-controls {
     padding-bottom: 8px;
 }

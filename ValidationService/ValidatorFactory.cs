@@ -15,7 +15,15 @@ namespace ValidationService
     {
         public IAValidator GetValidator(object o)
         {
-            return o is TransactionDto dto ? new TransactionDtoValidator(dto) : null;
+            switch (o)
+            {
+                case TransactionDto transactionDto:
+                    return new TransactionDtoValidator(transactionDto);
+                case AssetDto assetDto:
+                    return new AssetDtoValidator(assetDto);
+                default:
+                    return null;
+            }
         }
     }
 }

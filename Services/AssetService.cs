@@ -16,6 +16,7 @@ namespace Services
         AssetDto Get(Guid id);
         IEnumerable<AssetDto> GetAll();
         IEnumerable<AssetPriceDto> GetAssetPrices(Guid id);
+        void Create(AssetDto assetDto);
     }
     public class AssetService : BaseService, IAssetService
     {
@@ -49,6 +50,13 @@ namespace Services
             var prices = _context.AssetPrices.Where(x => x.AssetId == id);
             var dtos = prices.Select(x => _mapper.Map<AssetPrice, AssetPriceDto>(x));
             return dtos;
+        }
+
+        public void Create(AssetDto assetDto)
+        {
+            var asset = _mapper.Map<AssetDto, Asset>(assetDto);
+            _context.Assets.Add(asset);
+            _context.SaveChanges();
         }
     }
 }

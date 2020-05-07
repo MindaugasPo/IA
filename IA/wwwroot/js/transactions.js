@@ -7,7 +7,7 @@
             "/Transaction/Create",
             $("#new-transaction-form").serialize(),
             function (result) {
-                $("#main-menu-portfolio").trigger("click");
+                triggerMainMenu("#main-menu-portfolio");
             }
         );
     });

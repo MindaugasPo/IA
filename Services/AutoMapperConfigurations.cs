@@ -12,6 +12,7 @@ namespace Services
         public AutoMapperConfigurations()
         {
             CreateMap<Asset, AssetDto>();
+            CreateMap<AssetDto, Asset>();
             CreateMap<Transaction, TransactionDto>();
             CreateMap<TransactionDto, Transaction>();
             CreateMap<Portfolio, PortfolioDto>();

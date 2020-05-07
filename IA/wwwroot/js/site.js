@@ -17,3 +17,7 @@ function fillMain(result) {
         $("main").html(result);
     }
 }
+
+function triggerMainMenu(item) {
+    $(item).trigger("click");
+}

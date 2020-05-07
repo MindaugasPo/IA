@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using IA.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using Types.DTO;
+using ValidationService;
 
 namespace IA.Controllers
 {
@@ -12,12 +14,32 @@ namespace IA.Controllers
     {
         private readonly IAssetService _assetService;
         private readonly ITransactionService _transactionService;
+        private readonly IAValidatorFactory _validatorFactory;
         public AssetController(
             IAssetService assetService,
-            ITransactionService transactionService)
+            ITransactionService transactionService,
+            IAValidatorFactory validatorFactory)
         {
             _assetService = assetService;
             _transactionService = transactionService;
+            _validatorFactory = validatorFactory;
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return PartialView("~/Views/Asset/NewAsset.cshtml");
+        }
+
+        [HttpPost]
+        public IActionResult Create(AssetDto assetDto)
+        {
+            if (!_validatorFactory.GetValidator(assetDto).IsValid())
+            {
+                return new JsonResult("Asset is not valid");
+            }
+            _assetService.Create(assetDto);
+            return new JsonResult("Created");
         }
 
         [HttpGet]
