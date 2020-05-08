@@ -15,8 +15,9 @@
                     <th>Close Date (UTC)</th>
                 }
                 <th>Close Price</th>
-                <th></th>
-                <th>Delete</th>
+                <th>@* Close *@</th>
+                <th>@* Delete *@</th>
+                <th>@* Edit *@</th>
             </tr>
         </thead>
         <tbody>
@@ -25,14 +26,16 @@
             <tr id="@("tr-" + @transaction.Id)">
                 <td>@transaction.Asset.Title (@transaction.Asset.Ticker)</td>
                 <td>@transaction.OpenPrice</td>
-                <td>@transaction.OpenDateUtc</td>
+                <td>@transaction.OpenDateUtc.ToShortDateString()</td>
                 <td>@transaction.Amount</td>
                 <td>@transaction.Commission</td>
                 <td>@transaction.Currency</td>
+
                 @if (Model.DisplayCloseData)
                 {
                     <td>@transaction.CloseDateUtc</td>
                 }
+
                 @if (transaction.CloseDateUtc == null)
                 {
                     <td><input id="@("close-price-" + transaction.Id)" type="text" class="form-control"></td>
@@ -41,9 +44,11 @@
                 else
                 {
                     <td>@transaction.ClosePrice</td>
-                    <td></td>
+                    <td>@* Close *@</td>
                 }
+
                 <td><button type="button" class="btn btn-link delete-position" data-transaction-id="@transaction.Id">Delete</button></td>
+                <td><button type="button" class="btn btn-link edit-position" data-transaction-id="@transaction.Id">Edit</button></td>
 
             </tr>
         }

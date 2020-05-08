@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using AutoMapper;
 using IADbContext;
 using Microsoft.EntityFrameworkCore;
@@ -14,8 +13,10 @@ namespace Services
     {
         IEnumerable<TransactionDto> GetAll();
         void Create(TransactionDto transactionDto);
+        void Update(TransactionDto transactionDto);
         void Close(Guid id, decimal closePrice);
         void Delete(Guid id);
+        TransactionDto Get(Guid id);
     }
     public class TransactionService : BaseService, ITransactionService
     {
@@ -40,6 +41,28 @@ namespace Services
             _context.SaveChanges();
         }
 
+        public void Update(TransactionDto transaction)
+        {
+            var newTransaction = _mapper.Map<TransactionDto, Transaction>(transaction);
+            var existingTransaction = _context.Transactions.SingleOrDefault(x => x.Id == transaction.Id);
+
+            if (existingTransaction != null)
+            {
+                existingTransaction.OpenPrice = newTransaction.OpenPrice;
+                existingTransaction.OpenDateUtc = newTransaction.OpenDateUtc;
+                existingTransaction.Amount = newTransaction.Amount;
+                existingTransaction.Commission = newTransaction.Commission;
+                existingTransaction.TransactionType = newTransaction.TransactionType;
+                existingTransaction.Currency = newTransaction.Currency;
+                existingTransaction.ClosePrice = newTransaction.ClosePrice;
+                existingTransaction.CloseDateUtc = newTransaction.CloseDateUtc;
+                existingTransaction.AssetId = newTransaction.AssetId;
+                existingTransaction.PortfolioId = newTransaction.PortfolioId;
+            }
+
+            _context.SaveChanges();
+        }
+
         public void Close(Guid id, decimal closePrice)
         {
             var transaction = _context.Transactions.SingleOrDefault(x => x.Id == id);
@@ -59,6 +82,19 @@ namespace Services
                 _context.Transactions.Remove(transaction);
                 _context.SaveChanges();
             }
+        }
+
+        public TransactionDto Get(Guid id)
+        {
+            var transaction = _context.Transactions.SingleOrDefault(x => x.Id == id);
+            TransactionDto transactionDto = null;
+
+            if (transaction != null)
+            {
+                transactionDto = _mapper.Map<Transaction, TransactionDto>(transaction);
+            }
+
+            return transactionDto;
         }
     }
 }

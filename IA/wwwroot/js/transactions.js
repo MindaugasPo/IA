@@ -1,25 +1,32 @@
 ﻿$(document).ready(function () {
-    $(document).on("click", "#submit-new-transaction-form", function (event) {
+    $(document).on("click", "#submit-transaction-update-form", function (event) {
         event.preventDefault();
         event.stopPropagation();
-
+        submitTransaction("/Transaction/Update");
+    });
+    $(document).on("click", "#submit-transaction-create-form", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        submitTransaction("/Transaction/Create");
+    });
+    function submitTransaction(url) {
         Ajax("POST",
-            "/Transaction/Create",
-            $("#new-transaction-form").serialize(),
+            url,
+            $("#transaction-form").serialize(),
             function (result) {
                 if (result) {
                     if (result.success) {
                         triggerMainMenu("#main-menu-portfolio");
                     } else {
-                        $("#new-transaction-form .validation-error").removeClass("d-none");
-                        $("#new-transaction-form .validation-error").text(result.message);
+                        $("#transaction-form .validation-error").removeClass("d-none");
+                        $("#transaction-form .validation-error").text(result.message);
                     }
                 } else {
-                    $("#new-transaction-form .validation-error").text("Something went wrong");
+                    $("#transaction-form .validation-error").text("Something went wrong");
                 }
             }
         );
-    });
+    }
 
     $(document).on("click", "#new-position", function (event) {
         event.preventDefault();
@@ -72,5 +79,20 @@
                 }
             }
         );
+    });
+
+    $(document).on("click", ".edit-position", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        var transactionId = $(this).data("transaction-id");
+
+        Ajax(
+            "GET",
+            "/Transaction/Edit",
+            { "id": transactionId },
+            fillMain
+        );
+        console.log("editing " + transactionId);
     });
 });

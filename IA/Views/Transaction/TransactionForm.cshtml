@@ -1,0 +1,100 @@
+﻿@using Types
+@model IA.ViewModels.TransactionFormVM
+
+<div id="transaction-container">
+    <form id="transaction-form">
+        <input id="PortfolioId" type="text" class="d-none" name="PortfolioId" value="@Model.PortfolioId"/>
+        <input id="TransactionId" type="text" class="d-none" name="Id" value="@(Model.Transaction != null ? Model.Transaction.Id : Guid.Empty)"/>
+        <div class="container">
+            <div class="row">
+                <div class="form-group col-4">
+                    <label for="AssetId">Asset</label>
+                    <select id="AssetId" name="AssetId" class="custom-select">
+                        @foreach (var asset in Model.Assets)
+                        {
+                            if (Model.Transaction != null && Model.Transaction.AssetId == asset.Id)
+                            {
+                                <option selected value="@asset.Id">@asset.Title</option>
+                            }
+                            else
+                            {
+                                <option value="@asset.Id">@asset.Title</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-4">
+                    <label for="Type">Type</label>
+                    <select id="Type" name="Type" class="custom-select">
+                        @if (Model.Transaction != null)
+                        {
+                            <option selected="@(Model.Transaction.TransactionType == IAenums.TransactionType.Long ? "selected" : String.Empty)" value="1">Long</option>
+                            <option selected="@(Model.Transaction.TransactionType == IAenums.TransactionType.Short ? "selected" : String.Empty)" value="2">Short</option>
+                        }
+                        else
+                        {
+                            <option value="1">Long</option>
+                            <option value="2">Short</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-4">
+                    <label for="Currency">Currency</label>
+                    <select id="Currency" name="Currency" class="custom-select">
+                        @if (Model.Transaction != null)
+                        {
+                            <option selected="@(Model.Transaction.Currency == IAenums.Currency.EUR ? "selected" : String.Empty)" value="1">EUR</option>
+                            <option selected="@(Model.Transaction.Currency == IAenums.Currency.USD ? "selected" : String.Empty)" value="2">USD</option>
+                        }
+                        else
+                        {
+                            <option value="1">EUR</option>
+                            <option selected value="2">USD</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-6">
+                    <label for="OpenDateUtc">Open Date (UTC)</label>
+                    <input id="OpenDateUtc" type="text" class="form-control" name="OpenDateUtc" value="@(Model.Transaction != null ? Model.Transaction.OpenDateUtc.ToShortDateString() : String.Empty)" />
+                </div>
+                <div class="form-group col-6">
+                    <label for="CloseDateUtc">Close Date (UTC)</label>
+                    <input id="CloseDateUtc" type="text" class="form-control" name="CloseDateUtc" value="@(Model.Transaction?.CloseDateUtc != null ? Model.Transaction.CloseDateUtc.Value.ToShortDateString() : String.Empty)" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-6">
+                    <label for="OpenPrice">Open Price</label>
+                    <input id="OpenPrice" type="text" class="form-control" name="OpenPrice" value="@Model.Transaction?.OpenPrice" />
+                </div>
+                <div class="form-group col-6">
+                    <label for="ClosePrice">Close Price</label>
+                    <input id="ClosePrice" type="text" class="form-control" name="ClosePrice" value="@Model.Transaction?.ClosePrice" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-6">
+                    <label for="Amount">Amount</label>
+                    <input id="Amount" type="text" class="form-control" name="Amount" value="@Model.Transaction?.Amount" />
+                </div>
+                <div class="form-group col-6">
+                    <label for="Commission">Commission</label>
+                    <input id="Commission" type="text" class="form-control" name="Commission" value="@Model.Transaction?.Commission" />
+                </div>
+            </div>
+            <div>
+                <label class="validation-error d-none"></label>
+            </div>
+            @if (Model.Transaction != null)
+            {
+                <button id="submit-transaction-update-form" class="btn btn-primary">Save</button>
+            }
+            else
+            {
+                <button id="submit-transaction-create-form" class="btn btn-primary">Save</button>
+            }
+        </div>
+    </form>
+</div>
