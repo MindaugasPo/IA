@@ -83,3 +83,7 @@ main a {
 .active {
     border-bottom: 5px solid #1b6ec2;
 }
+
+.validation-error {
+    color: red;
+}

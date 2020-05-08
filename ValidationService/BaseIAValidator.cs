@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using FluentValidation;
 
@@ -9,6 +10,7 @@ namespace ValidationService
     public interface IAValidator
     {
         bool IsValid();
+        string Errors();
     }
     public class BaseIAValidator<T> : AbstractValidator<T>, IAValidator where T : class
     {
@@ -21,6 +23,12 @@ namespace ValidationService
         public bool IsValid()
         {
             return Validate(_objectToValidate).IsValid;
+        }
+
+        public string Errors()
+        {
+            var errors = Validate(_objectToValidate).Errors.Select(x => x.ErrorMessage);
+            return String.Join(" ", errors);
         }
     }
 }

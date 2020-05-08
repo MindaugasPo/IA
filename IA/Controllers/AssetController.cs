@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using IA.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using Types;
 using Types.DTO;
 using ValidationService;
 
@@ -34,9 +35,10 @@ namespace IA.Controllers
         [HttpPost]
         public IActionResult Create(AssetDto assetDto)
         {
-            if (!_validatorFactory.GetValidator(assetDto).IsValid())
+            var validator = _validatorFactory.GetValidator(assetDto);
+            if (!validator.IsValid())
             {
-                return new JsonResult("Asset is not valid");
+                return new JsonResult(new AjaxResult(){Success = false, Message = validator.Errors()});
             }
             _assetService.Create(assetDto);
             return new JsonResult("Created");
@@ -59,7 +61,7 @@ namespace IA.Controllers
 
             if (asset == null)
             {
-                return new JsonResult("Asset was not found");
+                return new JsonResult(new AjaxResult() {Success = false, Message = "Asset was not found"});
             }
 
             var vm = new AssetPricesVM()

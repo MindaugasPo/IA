@@ -1,10 +1,10 @@
 ﻿<div id="new-asset-container">
-    <form id="new-asset-form">
+    <form id="new-asset-form" class="needs-validation" novalidate >
         <div class="container">
             <div class="row">
                 <div class="form-group col-6">
                     <label for="Ticker">Ticker</label>
-                    <input id="Ticker" type="text" class="form-control" name="Ticker" />
+                    <input id="Ticker" type="text" class="form-control" name="Ticker" required />
                 </div>
                 <div class="form-group col-6">
                     <label for="AssetType">Type</label>
@@ -20,6 +20,9 @@
                     <label for="Title">Title</label>
                     <input id="Title" type="text" class="form-control" name="Title" />
                 </div>
+            </div>
+            <div>
+                <label class="validation-error d-none"></label>
             </div>
             <button id="submit-new-asset-form" class="btn btn-primary">Create Asset</button>
         </div>

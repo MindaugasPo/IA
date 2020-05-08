@@ -19,8 +19,7 @@ namespace Services
         void Create(AssetDto assetDto);
     }
     public class AssetService : BaseService, IAssetService
-    {
-        //private readonly 
+    { 
         public AssetService(
             IAContext context,
             IMapper mapper)

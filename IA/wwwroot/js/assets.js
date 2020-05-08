@@ -7,7 +7,16 @@
             "/Asset/Create",
             $("#new-asset-form").serialize(),
             function (result) {
-                triggerMainMenu("#main-menu-assets");
+                if (result) {
+                    if (result.success) {
+                        triggerMainMenu("#main-menu-assets");
+                    } else {
+                        $("#new-asset-form .validation-error").removeClass("d-none");
+                        $("#new-asset-form .validation-error").text(result.message);
+                    }
+                } else {
+                    $("#new-asset-form .validation-error").text("Something went wrong");
+                }
             }
         );
     });

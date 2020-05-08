@@ -7,7 +7,16 @@
             "/Transaction/Create",
             $("#new-transaction-form").serialize(),
             function (result) {
-                triggerMainMenu("#main-menu-portfolio");
+                if (result) {
+                    if (result.success) {
+                        triggerMainMenu("#main-menu-portfolio");
+                    } else {
+                        $("#new-transaction-form .validation-error").removeClass("d-none");
+                        $("#new-transaction-form .validation-error").text(result.message);
+                    }
+                } else {
+                    $("#new-transaction-form .validation-error").text("Something went wrong");
+                }
             }
         );
     });

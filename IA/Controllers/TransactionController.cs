@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using IA.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using Types;
 using Types.DTO;
 using ValidationService;
 
@@ -50,9 +51,10 @@ namespace IA.Controllers
         [HttpPost]
         public IActionResult Create(TransactionDto transaction)
         {
-            if (!_validatorFactory.GetValidator(transaction).IsValid())
+            var validator = _validatorFactory.GetValidator(transaction);
+            if (!validator.IsValid())
             {
-                return new JsonResult("Transaction is not valid");
+                return new JsonResult(new AjaxResult() { Success = false, Message = validator.Errors() });
             }
 
             _transactionService.Create(transaction);
