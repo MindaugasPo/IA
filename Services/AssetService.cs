@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using AutoMapper;
 using IADbContext;
-using Microsoft.EntityFrameworkCore;
 using Types.DTO;
 using Types.Entities;
 

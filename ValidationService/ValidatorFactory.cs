@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FluentValidation;
-using Types.DTO;
+﻿using Types.DTO;
 
 namespace ValidationService
 {
