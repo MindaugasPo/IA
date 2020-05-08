@@ -9,5 +9,6 @@ namespace IA.ViewModels
         public Guid PortfolioId { get; set; }
         public string Title { get; set; }
         public List<TransactionDto> Transactions { get; set; }
+        public List<TransactionDto> HistoricTransactions { get; set; }
     }
 }

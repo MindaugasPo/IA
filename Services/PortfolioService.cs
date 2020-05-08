@@ -13,6 +13,7 @@ namespace Services
     {
         PortfolioDto Get(Guid id);
         PortfolioDto GetCurrent(Guid id);
+        PortfolioDto GetHistoricPortfolio(Guid id);
     }
     public class PortfolioService : BaseService, IPortfolioService
     {
@@ -28,6 +29,8 @@ namespace Services
 
         private Portfolio GetPortfolioWithAllTransactions(Guid id)
         {
+            var l = _context.Portfolios.Include(x => x.Transactions)
+                .ThenInclude(x => x.Asset).ToList();
             return _context.Portfolios
                 .Include(x => x.Transactions)
                 .ThenInclude(x => x.Asset)
@@ -47,8 +50,22 @@ namespace Services
             {
                 return null;
             }
-            var currentPortfolio = _portfolioBusiness.GetCurrentPortfolio(portfolio);
-            return _mapper.Map<Portfolio, PortfolioDto>(currentPortfolio);
+            var portfolioDto = _mapper.Map<Portfolio, PortfolioDto>(portfolio);
+            var currentPortfolio = _portfolioBusiness.GetCurrentPortfolio(portfolioDto);
+            return currentPortfolio;
+        }
+
+        public PortfolioDto GetHistoricPortfolio(Guid id)
+        {
+            var portfolio = GetPortfolioWithAllTransactions(id);
+            if (portfolio == null)
+            {
+                return null;
+            }
+
+            var portfolioDto = _mapper.Map<Portfolio, PortfolioDto>(portfolio);
+            var historicPortfolio = _portfolioBusiness.GetHistoricPortfolio(portfolioDto);
+            return historicPortfolio;
         }
     }
 }
