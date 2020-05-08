@@ -21,3 +21,8 @@ function fillMain(result) {
 function triggerMainMenu(item) {
     $(item).trigger("click");
 }
+
+$("nav a").on("click", function(event) {
+    $(".nav-link").removeClass("active");
+    $(this).addClass("active");
+});

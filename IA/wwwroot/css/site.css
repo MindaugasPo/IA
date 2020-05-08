@@ -79,3 +79,7 @@ main a {
 .asset-controls {
     padding-bottom: 8px;
 }
+
+.active {
+    border-bottom: 5px solid #1b6ec2;
+}
