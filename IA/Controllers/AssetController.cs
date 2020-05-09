@@ -24,6 +24,13 @@ namespace IA.Controllers
             _assetPriceService = assetPriceService;
         }
 
+        [HttpPost]
+        public IActionResult DeleteAssetPrice(Guid assetPriceId)
+        {
+            _assetPriceService.Delete(assetPriceId);
+            return new JsonResult(new AjaxResult() { Success = true, Message = "Deleted" });
+        }
+
         [HttpGet]
         public IActionResult EditAssetPrice(Guid id)
         {

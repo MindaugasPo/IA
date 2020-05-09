@@ -21,6 +21,7 @@
                     <th>Low Price</th>
                     <th>Close Price</th>
                     <th>@* Edit *@</th>
+                    <th>@* Delete *@</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,6 +34,7 @@
                         <td>@assetPrice.LowPrice</td>
                         <td>@assetPrice.ClosePrice</td>
                         <td><button type="button" class="btn btn-link asset-price-edit" data-asset-price-id="@assetPrice.Id">Edit</button></td>
+                        <td><button type="button" class="btn btn-link asset-price-delete" data-asset-price-id="@assetPrice.Id">Delete</button></td>
                     </tr>
                 }
             </tbody>

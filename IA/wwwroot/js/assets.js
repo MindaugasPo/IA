@@ -134,4 +134,20 @@
             }
         );
     });
+
+    $(document).on("click", ".asset-price-delete", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        var assetId = $("#asset-id").val();
+        var assetPriceId = $(this).data("asset-price-id");
+        Ajax(
+            "POST",
+            "/Asset/DeleteAssetPrice",
+            { "assetPriceId": assetPriceId },
+            function (result) {
+                getAssetPrices(assetId);
+            }
+        );
+    });
 });

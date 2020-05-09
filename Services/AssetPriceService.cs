@@ -15,6 +15,7 @@ namespace Services
         AssetPriceDto Get(Guid id);
         void Update(AssetPriceDto assetPriceDto);
         void Create(AssetPriceDto assetPriceDto);
+        void Delete(Guid id);
     }
     public class AssetPriceService : BaseService, IAssetPriceService
     {
@@ -23,6 +24,16 @@ namespace Services
             IMapper mapper)
             : base(context, mapper)
         {
+        }
+
+        public void Delete(Guid id)
+        {
+            var asset = _context.AssetPrices.SingleOrDefault(x => x.Id == id);
+            if (asset != null)
+            {
+                _context.AssetPrices.Remove(asset);
+                _context.SaveChanges();
+            }
         }
 
         public IEnumerable<AssetPriceDto> GetAssetPrices(Guid id)
