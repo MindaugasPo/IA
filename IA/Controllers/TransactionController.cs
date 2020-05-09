@@ -94,14 +94,14 @@ namespace IA.Controllers
         public IActionResult Close(Guid id, decimal closePrice)
         {
             _transactionService.Close(id, closePrice);
-            return new JsonResult("Closed");
+            return new JsonResult(new AjaxResult() { Success = true, Message = "Closed"});
         }
 
         [HttpPost]
         public IActionResult Delete(Guid id)
         {
             _transactionService.Delete(id);
-            return new JsonResult("Deleted");
+            return new JsonResult(new AjaxResult() { Success = true, Message = "Deleted" });
         }
     }
 }

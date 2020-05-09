@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using IA.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using Types;
 using Types.DTO;
 
 namespace IA.Controllers
@@ -23,7 +24,7 @@ namespace IA.Controllers
 
             if (portfolio == null)
             {
-                return new JsonResult("Portfolio was not found");
+                return new JsonResult(new AjaxResult() { Success = false, Message = "Portfolio was not found" });
             }
 
             var vm = new PortfolioVM()
