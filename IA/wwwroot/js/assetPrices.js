@@ -1,15 +1,29 @@
 ﻿$(document).ready(function () {
+    $(document).on("click", "#asset-price-create", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        var assetId = $("#asset-id").val();
+        Ajax(
+            "GET",
+            "/AssetPrice/Create",
+            { "assetId": assetId },
+            function (result) {
+                $("#add-asset-price-container").html(result);
+            }
+        );
+    });
     $(document).on("click", "#submit-asset-price-create-form", function (event) {
         event.preventDefault();
         event.stopPropagation();
 
-        submitAssetPrice("/AssetPrice/CreateAssetPrice");
+        submitAssetPrice("/AssetPrice/Create");
     });
     $(document).on("click", "#submit-asset-price-update-form", function (event) {
         event.preventDefault();
         event.stopPropagation();
 
-        submitAssetPrice("/AssetPrice/UpdateAssetPrice");
+        submitAssetPrice("/AssetPrice/Update");
     });
     function submitAssetPrice(url) {
         var assetId = $("#asset-id").val();
@@ -39,7 +53,7 @@
     function getAssetPrices(assetId) {
         Ajax(
             "GET",
-            "/AssetPrice/GetAssetPrices",
+            "/AssetPrice/Get",
             { "id": assetId },
             fillMain
         );
@@ -51,27 +65,12 @@
         var assetPriceId = $(this).data("asset-price-id");
         Ajax(
             "GET",
-            "/AssetPrice/EditAssetPrice",
+            "/AssetPrice/Edit",
             { "id": assetPriceId },
             function (result) {
                 if (result) {
                     fillMain(result);
                 }
-            }
-        );
-    });
-
-    $(document).on("click", "#asset-price-create", function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        var assetId = $("#asset-id").val();
-        Ajax(
-            "GET",
-            "/AssetPrice/CreateAssetPrice",
-            { "assetId": assetId },
-            function (result) {
-                $("#add-asset-price-container").html(result);
             }
         );
     });
@@ -84,7 +83,7 @@
         var assetPriceId = $(this).data("asset-price-id");
         Ajax(
             "POST",
-            "/AssetPrice/DeleteAssetPrice",
+            "/AssetPrice/Delete",
             { "assetPriceId": assetPriceId },
             function (result) {
                 getAssetPrices(assetId);

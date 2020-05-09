@@ -28,30 +28,19 @@ namespace IA.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteAssetPrice(Guid assetPriceId)
+        public IActionResult Delete(Guid assetPriceId)
         {
             _assetPriceService.Delete(assetPriceId);
             return new JsonResult(new AjaxResult() { Success = true, Message = "Deleted" });
         }
         [HttpGet]
-        public IActionResult EditAssetPrice(Guid id)
-        {
-            var assetPrice = _assetPriceService.Get(id);
-            if (assetPrice == null)
-            {
-                return new JsonResult(new AjaxResult() { Success = false, Message = "Asset price was not found" });
-            }
-            var vm = new AssetPriceFormVM() { AssetPriceDto = assetPrice, AssetId = assetPrice.Asset.Id };
-            return PartialView("~/Views/Asset/AssetPriceForm.cshtml", vm);
-        }
-        [HttpGet]
-        public IActionResult CreateAssetPrice(Guid assetId)
+        public IActionResult Create(Guid assetId)
         {
             var vm = new AssetPriceFormVM() { AssetPriceDto = null, AssetId = assetId };
             return PartialView("~/Views/Asset/AssetPriceForm.cshtml", vm);
         }
         [HttpPost]
-        public IActionResult CreateAssetPrice(AssetPriceDto assetPriceDto)
+        public IActionResult Create(AssetPriceDto assetPriceDto)
         {
             var validator = _validatorFactory.GetValidator(assetPriceDto);
             if (!validator.IsValid())
@@ -61,8 +50,19 @@ namespace IA.Controllers
             _assetPriceService.Create(assetPriceDto);
             return new JsonResult(new AjaxResult() { Success = true, Message = "Updated" });
         }
+        [HttpGet]
+        public IActionResult Edit(Guid id)
+        {
+            var assetPrice = _assetPriceService.Get(id);
+            if (assetPrice == null)
+            {
+                return new JsonResult(new AjaxResult() { Success = false, Message = "Asset price was not found" });
+            }
+            var vm = new AssetPriceFormVM() { AssetPriceDto = assetPrice, AssetId = assetPrice.Asset.Id };
+            return PartialView("~/Views/Asset/AssetPriceForm.cshtml", vm);
+        }
         [HttpPost]
-        public IActionResult UpdateAssetPrice(AssetPriceDto assetPriceDto)
+        public IActionResult Update(AssetPriceDto assetPriceDto)
         {
             var validator = _validatorFactory.GetValidator(assetPriceDto);
             if (!validator.IsValid())
@@ -73,7 +73,7 @@ namespace IA.Controllers
             return new JsonResult(new AjaxResult() { Success = true, Message = "Updated" });
         }
         [HttpGet]
-        public IActionResult GetAssetPrices(Guid id)
+        public IActionResult Get(Guid id)
         {
             var asset = _assetService.Get(id);
 
