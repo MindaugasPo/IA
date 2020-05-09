@@ -25,9 +25,28 @@ namespace IA.Controllers
         }
 
         [HttpGet]
+        public IActionResult Edit(Guid id)
+        {
+            var asset = _assetService.Get(id);
+            if (asset == null)
+            {
+                return new JsonResult(new AjaxResult(){ Success = false, Message = "Asset was not found" });
+            }
+
+            var vm = new AssetFormVM() {Asset = asset};
+            return PartialView("~/Views/Asset/AssetForm.cshtml", vm);
+        }
+
+        [HttpGet]
         public IActionResult Create()
         {
-            return PartialView("~/Views/Asset/NewAsset.cshtml");
+            return PartialView("~/Views/Asset/AssetForm.cshtml", new AssetFormVM());
+        }
+
+        [HttpPost]
+        public IActionResult Update(AssetDto asset)
+        {
+            return new JsonResult(new AjaxResult() { Success = true, Message = "Updated" });
         }
 
         [HttpPost]
@@ -39,7 +58,7 @@ namespace IA.Controllers
                 return new JsonResult(new AjaxResult(){Success = false, Message = validator.Errors()});
             }
             _assetService.Create(assetDto);
-            return new JsonResult("Created");
+            return new JsonResult(new AjaxResult(){ Success = true, Message = "Created" });
         }
 
         [HttpGet]

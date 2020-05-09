@@ -10,6 +10,7 @@
             <th>Title</th>
             <th>Ticker</th>
             <th>Type</th>
+            <th>@* Edit *@</th>
         </tr>
         </thead>
         <tbody>
@@ -19,6 +20,7 @@
                     <td><a class="asset-link" data-asset-id="@asset.Id">@asset.Title</a></td>
                     <td>@asset.Ticker</td>
                     <td>@asset.AssetType.ToString()</td>
+                    <td><button type="button" class="btn btn-link edit-asset" data-asset-id="@asset.Id">Edit</button></td>
                 </tr>
             }
         </tbody>

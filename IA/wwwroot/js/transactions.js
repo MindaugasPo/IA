@@ -16,7 +16,7 @@
             function (result) {
                 if (result) {
                     if (result.success) {
-                        triggerMainMenu("#main-menu-portfolio");
+                        $("nav a.active").trigger("click");
                     } else {
                         $("#transaction-form .validation-error").removeClass("d-none");
                         $("#transaction-form .validation-error").text(result.message);
@@ -93,6 +93,5 @@
             { "id": transactionId },
             fillMain
         );
-        console.log("editing " + transactionId);
     });
 });

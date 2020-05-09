@@ -24,34 +24,38 @@
                     </select>
                 </div>
                 <div class="form-group col-4">
-                    <label for="Type">Type</label>
-                    <select id="Type" name="Type" class="custom-select">
-                        @if (Model.Transaction != null)
-                        {
-                            <option selected="@(Model.Transaction.TransactionType == IAenums.TransactionType.Long ? "selected" : String.Empty)" value="1">Long</option>
-                            <option selected="@(Model.Transaction.TransactionType == IAenums.TransactionType.Short ? "selected" : String.Empty)" value="2">Short</option>
-                        }
-                        else
-                        {
+                    <label for="TransactionType">TransactionType</label>
+                    @if (Model.Transaction != null)
+                    {
+                        <select id="TransactionType" name="TransactionType" class="custom-select" asp-for="Transaction.TransactionType">
                             <option value="1">Long</option>
                             <option value="2">Short</option>
-                        }
-                    </select>
+                        </select>
+                    }
+                    else
+                    {
+                        <select id="TransactionType" name="TransactionType" class="custom-select">
+                            <option value="1">Long</option>
+                            <option value="2">Short</option>
+                        </select>
+                    }
                 </div>
                 <div class="form-group col-4">
                     <label for="Currency">Currency</label>
-                    <select id="Currency" name="Currency" class="custom-select">
-                        @if (Model.Transaction != null)
-                        {
-                            <option selected="@(Model.Transaction.Currency == IAenums.Currency.EUR ? "selected" : String.Empty)" value="1">EUR</option>
-                            <option selected="@(Model.Transaction.Currency == IAenums.Currency.USD ? "selected" : String.Empty)" value="2">USD</option>
-                        }
-                        else
-                        {
+                    @if (Model.Transaction != null)
+                    {
+                        <select id="Currency" name="Currency" class="custom-select" asp-for="Transaction.Currency">
+                            <option value="1">EUR</option>
+                            <option value="2">USD</option>
+                        </select>
+                    }
+                    else
+                    {
+                        <select id="Currency" name="Currency" class="custom-select">
                             <option value="1">EUR</option>
                             <option selected value="2">USD</option>
-                        }
-                    </select>
+                        </select>
+                    }
                 </div>
             </div>
             <div class="row">

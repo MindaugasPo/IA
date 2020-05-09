@@ -1,0 +1,53 @@
+﻿@using Types
+@model IA.ViewModels.AssetFormVM
+
+<div id="new-asset-container">
+    <form id="asset-form" class="needs-validation" novalidate>
+        <input id="AssetId" type="text" class="d-none" name="Id" value="@(Model.Asset?.Id ?? Guid.Empty)" />
+
+        <div class="container">
+            <div class="row">
+                <div class="form-group col-6">
+                    <label for="Ticker">Ticker</label>
+                    <input id="Ticker" type="text" class="form-control" name="Ticker" value="@(Model.Asset != null ? Model.Asset.Ticker : String.Empty)" />
+                </div>
+                <div class="form-group col-6">
+                    <label for="AssetType">Type</label>
+                    @if (Model.Asset != null)
+                    {
+                        <select id="AssetType" name="AssetType" class="custom-select" asp-for=Asset.AssetType>
+                            <option value="1">Stock</option>
+                            <option value="2">Bond</option>
+                            <option value="3">Commodity</option>
+                        </select>
+                    }
+                    else
+                    {
+                        <select id="AssetType" name="AssetType" class="custom-select" @(string.Empty)>
+                            <option value="1">Stock</option>
+                            <option value="2">Bond</option>
+                            <option value="3">Commodity</option>
+                        </select>
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-12">
+                    <label for="Title">Title</label>
+                    <input id="Title" type="text" class="form-control" name="Title" value="@(Model.Asset != null ? Model.Asset.Title : String.Empty)" />
+                </div>
+            </div>
+            <div>
+                <label class="validation-error d-none"></label>
+            </div>
+            @if (Model.Asset != null)
+            {
+                <button id="submit-asset-update-form" class="btn btn-primary">Save</button>
+            }
+            else
+            {
+                <button id="submit-asset-create-form" class="btn btn-primary">Create Asset</button>
+            }
+        </div>
+    </form>
+</div>
