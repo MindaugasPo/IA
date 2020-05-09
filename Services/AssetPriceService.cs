@@ -58,25 +58,38 @@ namespace Services
 
         public void Update(AssetPriceDto assetPriceDto)
         {
-            var newAssetPrice = _mapper.Map<AssetPriceDto, AssetPrice>(assetPriceDto);
             var existingAssetPrice = _context.AssetPrices.SingleOrDefault(x => x.Id == assetPriceDto.Id);
             if (existingAssetPrice != null)
             {
-                existingAssetPrice.Date = newAssetPrice.Date;
-                existingAssetPrice.OpenPrice = newAssetPrice.OpenPrice;
-                existingAssetPrice.HighPrice = newAssetPrice.HighPrice;
-                existingAssetPrice.LowPrice = newAssetPrice.LowPrice;
-                existingAssetPrice.ClosePrice = newAssetPrice.ClosePrice;
+                UpdateExisting(existingAssetPrice, assetPriceDto);
+                _context.SaveChanges();
             }
-
-            _context.SaveChanges();
         }
 
         public void Create(AssetPriceDto assetPriceDto)
         {
-            var asset = _mapper.Map<AssetPriceDto, AssetPrice>(assetPriceDto);
-            _context.AssetPrices.Add(asset);
+            var existingAsset = _context.AssetPrices.SingleOrDefault(x =>
+                x.AssetId == assetPriceDto.AssetId && x.Date == assetPriceDto.Date);
+
+            if (existingAsset != null)
+            {
+                UpdateExisting(existingAsset, assetPriceDto);
+            }
+            else
+            {
+                var asset = _mapper.Map<AssetPriceDto, AssetPrice>(assetPriceDto);
+                _context.AssetPrices.Add(asset);
+            }
             _context.SaveChanges();
+        }
+
+        private void UpdateExisting(AssetPrice existingPrice, AssetPriceDto newPrice)
+        {
+            existingPrice.Date = newPrice.Date;
+            existingPrice.OpenPrice = newPrice.OpenPrice;
+            existingPrice.HighPrice = newPrice.HighPrice;
+            existingPrice.LowPrice = newPrice.LowPrice;
+            existingPrice.ClosePrice = newPrice.ClosePrice;
         }
     }
 }
