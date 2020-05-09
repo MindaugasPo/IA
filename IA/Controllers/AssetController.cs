@@ -12,15 +12,12 @@ namespace IA.Controllers
     public class AssetController : Controller
     {
         private readonly IAssetService _assetService;
-        private readonly ITransactionService _transactionService;
         private readonly IAValidatorFactory _validatorFactory;
         public AssetController(
             IAssetService assetService,
-            ITransactionService transactionService,
             IAValidatorFactory validatorFactory)
         {
             _assetService = assetService;
-            _transactionService = transactionService;
             _validatorFactory = validatorFactory;
         }
 
@@ -44,8 +41,15 @@ namespace IA.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(AssetDto asset)
+        public IActionResult Update(AssetDto assetDto)
         {
+            var validator = _validatorFactory.GetValidator(assetDto);
+            if (!validator.IsValid())
+            {
+                return new JsonResult(new AjaxResult() { Success = false, Message = validator.Errors() });
+            }
+
+            _assetService.Update(assetDto);
             return new JsonResult(new AjaxResult() { Success = true, Message = "Updated" });
         }
 

@@ -14,6 +14,7 @@ namespace Services
         IEnumerable<AssetDto> GetAll();
         IEnumerable<AssetPriceDto> GetAssetPrices(Guid id);
         void Create(AssetDto assetDto);
+        void Update(AssetDto assetDto);
     }
     public class AssetService : BaseService, IAssetService
     { 
@@ -52,6 +53,20 @@ namespace Services
         {
             var asset = _mapper.Map<AssetDto, Asset>(assetDto);
             _context.Assets.Add(asset);
+            _context.SaveChanges();
+        }
+
+        public void Update(AssetDto assetDto)
+        {
+            var newAsset = _mapper.Map<AssetDto, Asset>(assetDto);
+            var existingAsset = _context.Assets.SingleOrDefault(x => x.Id == assetDto.Id);
+            if (existingAsset != null)
+            {
+                existingAsset.Title = newAsset.Title;
+                existingAsset.Ticker = newAsset.Ticker;
+                existingAsset.AssetType = newAsset.AssetType;
+            }
+
             _context.SaveChanges();
         }
     }
