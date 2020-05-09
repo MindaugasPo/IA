@@ -1,0 +1,48 @@
+﻿@model IA.ViewModels.AssetPriceFormVM
+
+<div id="asset-price-container">
+    <form id="asset-price-form">
+        <input id="asset-id" type="text" class="d-none" name="AssetId" value="@(Model.AssetId)"/>
+        <input id="asset-price-id" type="text" class="d-none" name="Id" value="@(Model.AssetPriceDto?.Id ?? Guid.Empty)"/>
+
+        <div class="container">
+            <div class="row">
+                <div class="form-group col-12">
+                    <label for="Date">Date</label>
+                    <input id="Date" type="text" class="form-control" name="Date" value="@(Model.AssetPriceDto != null ? Model.AssetPriceDto.Date.ToShortDateString() : String.Empty)" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-6">
+                    <label for="OpenPrice">Open Price</label>
+                    <input id="OpenPrice" type="text" class="form-control" name="OpenPrice" value="@(Model.AssetPriceDto?.OpenPrice)" />
+                </div>
+                <div class="form-group col-6">
+                    <label for="ClosePrice">Close Price</label>
+                    <input id="ClosePrice" type="text" class="form-control" name="ClosePrice" value="@(Model.AssetPriceDto?.ClosePrice)" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-6">
+                    <label for="HighPrice">High Price</label>
+                    <input id="HighPrice" type="text" class="form-control" name="HighPrice" value="@(Model.AssetPriceDto?.HighPrice)" />
+                </div>
+                <div class="form-group col-6">
+                    <label for="LowPrice">Low Price</label>
+                    <input id="LowPrice" type="text" class="form-control" name="LowPrice" value="@(Model.AssetPriceDto?.LowPrice)" />
+                </div>
+            </div>
+            <div>
+                <label class="validation-error d-none"></label>
+            </div>
+            @if (Model.AssetPriceDto != null)
+            {
+                <button id="submit-asset-price-update-form" class="btn btn-primary">Save</button>
+            }
+            else
+            {
+                <button id="submit-asset-price-create-form" class="btn btn-primary">Create</button>
+            }
+        </div>
+    </form>
+</div>

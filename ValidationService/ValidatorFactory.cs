@@ -17,6 +17,8 @@ namespace ValidationService
                     return new TransactionDtoValidator(transactionDto);
                 case AssetDto assetDto:
                     return new AssetDtoValidator(assetDto);
+                case AssetPriceDto assetPriceDto:
+                    return new AssetPriceDtoValidator(assetPriceDto);
                 default:
                     return null;
             }

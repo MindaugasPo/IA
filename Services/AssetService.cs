@@ -12,7 +12,6 @@ namespace Services
     {
         AssetDto Get(Guid id);
         IEnumerable<AssetDto> GetAll();
-        IEnumerable<AssetPriceDto> GetAssetPrices(Guid id);
         void Create(AssetDto assetDto);
         void Update(AssetDto assetDto);
     }
@@ -40,13 +39,6 @@ namespace Services
         public IEnumerable<AssetDto> GetAll()
         {
             return _context.Assets.Select(x => _mapper.Map<Asset, AssetDto>(x)).ToList();
-        }
-
-        public IEnumerable<AssetPriceDto> GetAssetPrices(Guid id)
-        {
-            var prices = _context.AssetPrices.Where(x => x.AssetId == id);
-            var dtos = prices.Select(x => _mapper.Map<AssetPrice, AssetPriceDto>(x));
-            return dtos;
         }
 
         public void Create(AssetDto assetDto)

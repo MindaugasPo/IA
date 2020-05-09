@@ -83,6 +83,7 @@ namespace IA
         private void RegisterIaServices(IServiceCollection services)
         {
             services.AddScoped<IAssetService, AssetService>();
+            services.AddScoped<IAssetPriceService, AssetPriceService>();
             services.AddScoped<ITransactionService, TransactionService>();
             services.AddScoped<IPortfolioService, PortfolioService>();
         }

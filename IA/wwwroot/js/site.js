@@ -19,7 +19,11 @@ function fillMain(result) {
 }
 
 function triggerMainMenu(item) {
-    $(item).trigger("click");
+    if (item) {
+        $(item).trigger("click");
+    } else {
+        $("nav a.active").trigger("click");
+    }
 }
 
 $("nav a").on("click", function(event) {

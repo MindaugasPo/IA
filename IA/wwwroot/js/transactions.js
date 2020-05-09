@@ -16,7 +16,7 @@
             function (result) {
                 if (result) {
                     if (result.success) {
-                        $("nav a.active").trigger("click");
+                        triggerMainMenu();
                     } else {
                         $("#transaction-form .validation-error").removeClass("d-none");
                         $("#transaction-form .validation-error").text(result.message);

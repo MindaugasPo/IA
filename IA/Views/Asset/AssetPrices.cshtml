@@ -1,29 +1,40 @@
 ﻿@model IA.ViewModels.AssetPricesVM
 
-<div><h2>@Model.Asset.Title Prices</h2></div>
 
-<div class="all-asset-prices">
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Date</th>
-            <th>Open Price</th>
-            <th>High Price</th>
-            <th>Low Price</th>
-            <th>Close Price</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var assetPrice in Model.AssetPrices)
-        {
-            <tr>
-                <td>@assetPrice.Date.ToString("yyyy-mm-dd")</td>
-                <td>@assetPrice.OpenPrice</td>
-                <td>@assetPrice.HighPrice</td>
-                <td>@assetPrice.LowPrice</td>
-                <td>@assetPrice.ClosePrice</td>
-            </tr>
-        }
-        </tbody>
-    </table>
-</div>
+    <div class="all-asset-prices">
+        <div><h2>@Model.Asset.Title Prices</h2></div>
+
+        <input id="asset-id" type="text" class="d-none" value="@Model.Asset.Id" />
+
+        <div class="asset-price-controls">
+            <button id="asset-price-create" class="btn btn-primary">Add</button>
+        </div>
+        
+        <div id="add-asset-price-container"></div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Open Price</th>
+                    <th>High Price</th>
+                    <th>Low Price</th>
+                    <th>Close Price</th>
+                    <th>@* Edit *@</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var assetPrice in Model.AssetPrices)
+                {
+                    <tr>
+                        <td>@assetPrice.Date.ToShortDateString()</td>
+                        <td>@assetPrice.OpenPrice</td>
+                        <td>@assetPrice.HighPrice</td>
+                        <td>@assetPrice.LowPrice</td>
+                        <td>@assetPrice.ClosePrice</td>
+                        <td><button type="button" class="btn btn-link asset-price-edit" data-asset-price-id="@assetPrice.Id">Edit</button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>

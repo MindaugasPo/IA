@@ -76,7 +76,9 @@ main a {
 }
 
 .portfolio-controls,
-.asset-controls {
+.asset-controls,
+.asset-price-controls,
+#asset-price-container {
     padding-bottom: 8px;
 }
 
