@@ -42,7 +42,7 @@
         );
     });
 
-    $(document).on("click", ".asset-link", function (event) {
+    $(document).on("click", ".asset-prices", function (event) {
         event.preventDefault();
         event.stopPropagation();
 

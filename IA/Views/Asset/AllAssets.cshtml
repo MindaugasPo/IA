@@ -11,16 +11,18 @@
             <th>Ticker</th>
             <th>Type</th>
             <th>@* Edit *@</th>
+            <th>@* Prices *@</th>
         </tr>
         </thead>
         <tbody>
             @foreach (var asset in Model.Assets)
             {
                 <tr>
-                    <td><a class="asset-link" data-asset-id="@asset.Id">@asset.Title</a></td>
+                    <td>@asset.Title</td>
                     <td>@asset.Ticker</td>
                     <td>@asset.AssetType.ToString()</td>
                     <td><button type="button" class="btn btn-link edit-asset" data-asset-id="@asset.Id">Edit</button></td>
+                    <td><button type="button" class="btn btn-link asset-prices" data-asset-id="@asset.Id">Prices</button></td>
                 </tr>
             }
         </tbody>
