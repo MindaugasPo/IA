@@ -5,11 +5,10 @@ namespace IADbContext.Configurations
 {
     public class PortfolioConfiguration : BaseEntityConfiguration<Portfolio>
     {
-        public void Configure(EntityTypeBuilder<Portfolio> builder)
+        public override void Configure(EntityTypeBuilder<Portfolio> builder)
         {
-            builder.Property(x => x.Title)
-                .IsRequired()
-                .HasMaxLength(50);
+            base.Configure(builder);
+            builder.Property(x => x.Title).IsRequired().HasMaxLength(50);
         }
     }
 }
