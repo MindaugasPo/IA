@@ -1,7 +1,7 @@
-﻿create database IADB1
+﻿create database [IA]
 GO
 
-create table [IADB1].[dbo].[Assets](
+create table [IA].[dbo].[Assets](
 	Id uniqueidentifier PRIMARY KEY,
 	Title nvarchar(200) not null,
 	Ticker nvarchar(10) null,
@@ -10,17 +10,17 @@ create table [IADB1].[dbo].[Assets](
 )
 GO
 
-create table [IADB1].[dbo].[Version] (
+create table [IA].[dbo].[Version] (
 	[Key] nvarchar(10),
 	[Value] int
 )
 GO
 
-insert into [IADB1].[dbo].[Version] 
+insert into [IA].[dbo].[Version] 
 ([Key], [Value]) values ('DbVersion', 1)
 GO
 
-create table [IADB1].[dbo].[Portfolios] (
+create table [IA].[dbo].[Portfolios] (
 	Id uniqueidentifier,
 	Title nvarchar(50) not null,
 	CreatedDateUtc datetime2 not null,
@@ -28,7 +28,7 @@ create table [IADB1].[dbo].[Portfolios] (
 )
 GO
 
-create table [IADB1].[dbo].[Transactions](
+create table [IA].[dbo].[Transactions](
 	Id uniqueidentifier,
 	AssetId uniqueidentifier not null,
 	PortfolioId uniqueidentifier not null,
@@ -47,12 +47,12 @@ create table [IADB1].[dbo].[Transactions](
 )
 GO
 
-update [IADB1].[dbo].[Version]
+update [IA].[dbo].[Version]
 set [Value] = 2
 where [Key] = 'DbVersion'
 GO
 
-create table [IADB1].[dbo].[AssetPrices] (
+create table [IA].[dbo].[AssetPrices] (
 	Id uniqueidentifier,
 	AssetId uniqueidentifier not null,
 	[Date] datetime2 not null,
@@ -65,13 +65,13 @@ create table [IADB1].[dbo].[AssetPrices] (
 	constraint FK_AssetPrices_Assets foreign key (AssetId) references Assets (Id),
 )
 
-update [IADB1].[dbo].[Version]
+update [IA].[dbo].[Version]
 set [Value] = 3
 where [Key] = 'DbVersion'
 GO
 
 
-CREATE TABLE [dbo].[AspNetRoleClaims](
+CREATE TABLE [IA].[dbo].[AspNetRoleClaims](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[RoleId] [nvarchar](450) NOT NULL,
 	[ClaimType] [nvarchar](max) NULL,
@@ -83,7 +83,7 @@ CREATE TABLE [dbo].[AspNetRoleClaims](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 
-CREATE TABLE [dbo].[AspNetRoles](
+CREATE TABLE [IA].[dbo].[AspNetRoles](
 	[Id] [nvarchar](450) NOT NULL,
 	[Name] [nvarchar](256) NULL,
 	[NormalizedName] [nvarchar](256) NULL,
@@ -95,7 +95,7 @@ CREATE TABLE [dbo].[AspNetRoles](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 
-CREATE TABLE [dbo].[AspNetUserClaims](
+CREATE TABLE [IA].[dbo].[AspNetUserClaims](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[UserId] [nvarchar](450) NOT NULL,
 	[ClaimType] [nvarchar](max) NULL,
@@ -107,7 +107,7 @@ CREATE TABLE [dbo].[AspNetUserClaims](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 
-CREATE TABLE [dbo].[AspNetUserLogins](
+CREATE TABLE [IA].[dbo].[AspNetUserLogins](
 	[LoginProvider] [nvarchar](450) NOT NULL,
 	[ProviderKey] [nvarchar](450) NOT NULL,
 	[ProviderDisplayName] [nvarchar](max) NULL,
@@ -120,7 +120,7 @@ CREATE TABLE [dbo].[AspNetUserLogins](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 
-CREATE TABLE [dbo].[AspNetUserRoles](
+CREATE TABLE [IA].[dbo].[AspNetUserRoles](
 	[UserId] [nvarchar](450) NOT NULL,
 	[RoleId] [nvarchar](450) NOT NULL,
  CONSTRAINT [PK_AspNetUserRoles] PRIMARY KEY CLUSTERED 
@@ -131,7 +131,7 @@ CREATE TABLE [dbo].[AspNetUserRoles](
 ) ON [PRIMARY]
 GO
 
-CREATE TABLE [dbo].[AspNetUsers](
+CREATE TABLE [IA].[dbo].[AspNetUsers](
 	[Id] [nvarchar](450) NOT NULL,
 	[UserName] [nvarchar](256) NULL,
 	[NormalizedUserName] [nvarchar](256) NULL,
@@ -153,7 +153,7 @@ CREATE TABLE [dbo].[AspNetUsers](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
-CREATE TABLE [dbo].[AspNetUserTokens](
+CREATE TABLE [IA].[dbo].[AspNetUserTokens](
 	[UserId] [nvarchar](450) NOT NULL,
 	[LoginProvider] [nvarchar](450) NOT NULL,
 	[Name] [nvarchar](450) NOT NULL,
@@ -166,45 +166,45 @@ CREATE TABLE [dbo].[AspNetUserTokens](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-ALTER TABLE [dbo].[AspNetRoleClaims]  WITH CHECK ADD  CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId] FOREIGN KEY([RoleId])
-REFERENCES [dbo].[AspNetRoles] ([Id])
+ALTER TABLE [IA].[dbo].[AspNetRoleClaims]  WITH CHECK ADD  CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId] FOREIGN KEY([RoleId])
+REFERENCES [IA].[dbo].[AspNetRoles] ([Id])
 ON DELETE CASCADE
 GO
-ALTER TABLE [dbo].[AspNetRoleClaims] CHECK CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId]
+ALTER TABLE [IA].[dbo].[AspNetRoleClaims] CHECK CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId]
 GO
-ALTER TABLE [dbo].[AspNetUserClaims]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId] FOREIGN KEY([UserId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
+ALTER TABLE [IA].[dbo].[AspNetUserClaims]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [IA].[dbo].[AspNetUsers] ([Id])
 ON DELETE CASCADE
 GO
-ALTER TABLE [dbo].[AspNetUserClaims] CHECK CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId]
+ALTER TABLE [IA].[dbo].[AspNetUserClaims] CHECK CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId]
 GO
-ALTER TABLE [dbo].[AspNetUserLogins]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId] FOREIGN KEY([UserId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
+ALTER TABLE [IA].[dbo].[AspNetUserLogins]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [IA].[dbo].[AspNetUsers] ([Id])
 ON DELETE CASCADE
 GO
-ALTER TABLE [dbo].[AspNetUserLogins] CHECK CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId]
+ALTER TABLE [IA].[dbo].[AspNetUserLogins] CHECK CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId]
 GO
-ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId] FOREIGN KEY([RoleId])
-REFERENCES [dbo].[AspNetRoles] ([Id])
+ALTER TABLE [IA].[dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId] FOREIGN KEY([RoleId])
+REFERENCES [IA].[dbo].[AspNetRoles] ([Id])
 ON DELETE CASCADE
 GO
-ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId]
+ALTER TABLE [IA].[dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId]
 GO
-ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId] FOREIGN KEY([UserId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
+ALTER TABLE [IA].[dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [IA].[dbo].[AspNetUsers] ([Id])
 ON DELETE CASCADE
 GO
-ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId]
+ALTER TABLE [IA].[dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId]
 GO
-ALTER TABLE [dbo].[AspNetUserTokens]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_UserId] FOREIGN KEY([UserId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
+ALTER TABLE [IA].[dbo].[AspNetUserTokens]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [IA].[dbo].[AspNetUsers] ([Id])
 ON DELETE CASCADE
 GO
-ALTER TABLE [dbo].[AspNetUserTokens] CHECK CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_UserId]
+ALTER TABLE [IA].[dbo].[AspNetUserTokens] CHECK CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_UserId]
 GO
 
 
-update [IADB1].[dbo].[Version]
+update [IA].[dbo].[Version]
 set [Value] = 4
 where [Key] = 'DbVersion'
 GO
