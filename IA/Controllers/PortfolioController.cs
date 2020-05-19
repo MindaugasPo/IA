@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using IA.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using Types;
@@ -8,6 +9,7 @@ using Types.DTO;
 
 namespace IA.Controllers
 {
+    [Authorize]
     public class PortfolioController : Controller
     {
         private readonly IPortfolioService _portfolioService;

@@ -1,0 +1,41 @@
+﻿<h1>Sign in</h1>
+
+<div id="signin-form-container" class="row">
+    <div class="col-md-6">
+        <form id="account-signin-form">
+            <h4>Use a local account to sign in.</h4>
+            <hr>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input class="form-control" type="email" id="email" name="username" value="">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input class="form-control" type="password" id="password" name="password">
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox">
+                    <label for="remember-me">
+                        <input type="checkbox" id="remember-me" name="RememberMe" value="true">
+                        Remember me?
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button id="signin-submit" type="submit" class="btn btn-primary">Sign in</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="signin-failure-container" class="d-none row">
+    <div class="col-md-6">
+        <h4>Signin was not successful. Please try again.</h4>
+        <div id="signin-errors"></div>
+    </div>
+</div>
+
+

@@ -7,7 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper;
 using Business;
+using Microsoft.AspNetCore.Identity;
 using Services;
+using Types.Entities;
 using ValidationService;
 
 namespace IA
@@ -31,13 +33,15 @@ namespace IA
 
             services.AddSingleton<IAValidatorFactory, ValidatorFactory>();
             services.AddAutoMapper(typeof(AutoMapperConfigurations));
-
-            services.AddControllersWithViews();
-
+            
             RegisterDbContexts(services);
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<IAContext>();
+
             RegisterIaServices(services);
             RegisterIaBusiness(services);
             RegisterFinancialDataClient(services);
+            services.AddControllersWithViews();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,10 +55,12 @@ namespace IA
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -62,6 +68,7 @@ namespace IA
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
 

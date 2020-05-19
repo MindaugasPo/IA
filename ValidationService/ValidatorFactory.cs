@@ -15,10 +15,19 @@ namespace ValidationService
             {
                 case TransactionDto transactionDto:
                     return new TransactionDtoValidator(transactionDto);
+
                 case AssetDto assetDto:
                     return new AssetDtoValidator(assetDto);
+
                 case AssetPriceDto assetPriceDto:
                     return new AssetPriceDtoValidator(assetPriceDto);
+
+                case RegisterDto registerDto:
+                    return new RegisterDtoValidator(registerDto);
+
+                case SigninDto signinDto:
+                    return new SigninDtoValidator(signinDto);
+
                 default:
                     return null;
             }

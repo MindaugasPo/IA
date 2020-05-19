@@ -1,0 +1,38 @@
+﻿<h1>Register</h1>
+
+<div id="register-form-container" class="row">
+    <div class="col-md-6">
+        <form id="register-form">
+            <h4>Create a new account.</h4>
+            <hr>
+
+            <div class="form-group">
+                <label for="Username">Email</label>
+                <input class="form-control" type="email" id="Username" name="Username" value="">
+            </div>
+
+            <div class="form-group">
+                <label for="Password">Password</label>
+                <input class="form-control" type="password" id="Password" maxlength="100" name="Password">
+            </div>
+
+            <div class="form-group">
+                <label for="ConfirmPassword">Confirm password</label>
+                <input class="form-control" type="password" id="ConfirmPassword" name="ConfirmPassword">
+            </div>
+
+            <button id="register-submit" type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+</div>
+<div id="register-success-container" class="d-none row">
+    <div class="col-md-6">
+        <h4>Registration was successful. Please login.</h4>
+    </div>
+</div>
+<div id="register-failure-container" class="d-none row">
+    <div class="col-md-6">
+        <h4>Registration was not successful. Please try again.</h4>
+        <div id="registration-errors"></div>
+    </div>
+</div>

@@ -1,10 +1,11 @@
 ﻿using System.Reflection;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Types.Entities;
 
 namespace IADbContext
 {
-    public class IAContext : DbContext
+    public class IAContext : IdentityDbContext<User>
     {
         public DbSet<Asset> Assets { get; set; }
         public DbSet<AssetPrice> AssetPrices { get; set; }
@@ -17,6 +18,7 @@ namespace IADbContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }

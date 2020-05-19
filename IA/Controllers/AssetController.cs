@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using IA.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using Types;
@@ -9,6 +10,7 @@ using ValidationService;
 
 namespace IA.Controllers
 {
+    [Authorize]
     public class AssetController : Controller
     {
         private readonly IAssetService _assetService;

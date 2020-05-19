@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IA.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using Types;
@@ -11,6 +12,7 @@ using ValidationService;
 
 namespace IA.Controllers
 {
+    [Authorize]
     public class AssetPriceController : Controller
     {
         private readonly IAssetService _assetService;
