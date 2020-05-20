@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Text;
 using System.Threading.Tasks;
+using IA.Filters;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.V3.Pages.Internal.Account;
 using Microsoft.AspNetCore.Mvc;
 using Types;
 using Types.DTO;
 using Types.Entities;
-using ValidationService;
 
 namespace IA.Controllers
 {
@@ -15,15 +14,12 @@ namespace IA.Controllers
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
-        private readonly IAValidatorFactory _validatorFactory;
         public AccountController(
             SignInManager<User> signInManager,
-            UserManager<User> userManager,
-            IAValidatorFactory validatorFactory)
+            UserManager<User> userManager)
         {
             _signInManager = signInManager;
             _userManager = userManager;
-            _validatorFactory = validatorFactory;
         }
 
         [HttpGet]
@@ -33,14 +29,9 @@ namespace IA.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(IaValidationFilter))]
         public async Task<IActionResult> Register(RegisterDto registration)
         {
-            var validator = _validatorFactory.GetValidator(registration);
-            if (!validator.IsValid())
-            {
-                return new JsonResult(new AjaxResult() { Success = false, Message = validator.Errors() });
-            }
-
             var user = new User() { UserName = registration.Username };
             var result = await _userManager.CreateAsync(user, registration.Password);
             if (result.Succeeded)
@@ -65,14 +56,9 @@ namespace IA.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(IaValidationFilter))]
         public async Task<IActionResult> SignIn(SigninDto signinDto)
         {
-            var validator = _validatorFactory.GetValidator(signinDto);
-            if (!validator.IsValid())
-            {
-                return new JsonResult(new AjaxResult() { Success = false, Message = validator.Errors() });
-            }
-
             var result = await _signInManager.PasswordSignInAsync(
                 signinDto.Username, 
                 signinDto.Password, 

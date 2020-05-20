@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper;
 using Business;
+using IA.Filters;
 using Microsoft.AspNetCore.Identity;
 using Services;
 using Types.Entities;
@@ -37,6 +38,7 @@ namespace IA
             RegisterDbContexts(services);
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<IAContext>();
 
+            RegisterIaFilters(services);
             RegisterIaServices(services);
             RegisterIaBusiness(services);
             RegisterFinancialDataClient(services);
@@ -72,7 +74,10 @@ namespace IA
             });
         }
 
-
+        private void RegisterIaFilters(IServiceCollection services)
+        {
+            services.AddScoped<IaValidationFilter>();
+        }
         private void RegisterDbContexts(IServiceCollection services)
         {
             if (_env.IsDevelopment())

@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using IA.Filters;
 using IA.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using Types;
 using Types.DTO;
-using ValidationService;
 
 namespace IA.Controllers
 {
@@ -17,15 +15,12 @@ namespace IA.Controllers
     {
         private readonly IAssetService _assetService;
         private readonly IAssetPriceService _assetPriceService;
-        private readonly IAValidatorFactory _validatorFactory;
 
         public AssetPriceController(
             IAssetService assetService,
-            IAValidatorFactory validatorFactory,
             IAssetPriceService assetPriceService)
         {
             _assetService = assetService;
-            _validatorFactory = validatorFactory;
             _assetPriceService = assetPriceService;
         }
 
@@ -42,13 +37,9 @@ namespace IA.Controllers
             return PartialView("~/Views/Asset/AssetPriceForm.cshtml", vm);
         }
         [HttpPost]
+        [ServiceFilter(typeof(IaValidationFilter))]
         public IActionResult Create(AssetPriceDto assetPriceDto)
         {
-            var validator = _validatorFactory.GetValidator(assetPriceDto);
-            if (!validator.IsValid())
-            {
-                return new JsonResult(new AjaxResult() { Success = false, Message = validator.Errors() });
-            }
             _assetPriceService.Create(assetPriceDto);
             return new JsonResult(new AjaxResult() { Success = true, Message = "Updated" });
         }
@@ -64,13 +55,9 @@ namespace IA.Controllers
             return PartialView("~/Views/Asset/AssetPriceForm.cshtml", vm);
         }
         [HttpPost]
+        [ServiceFilter(typeof(IaValidationFilter))]
         public IActionResult Update(AssetPriceDto assetPriceDto)
         {
-            var validator = _validatorFactory.GetValidator(assetPriceDto);
-            if (!validator.IsValid())
-            {
-                return new JsonResult(new AjaxResult() { Success = false, Message = validator.Errors() });
-            }
             _assetPriceService.Update(assetPriceDto);
             return new JsonResult(new AjaxResult() { Success = true, Message = "Updated" });
         }

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
+using IA.Filters;
 using IA.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using Types;
 using Types.DTO;
-using ValidationService;
 
 namespace IA.Controllers
 {
@@ -15,15 +15,12 @@ namespace IA.Controllers
     {
         private readonly ITransactionService _transactionService;
         private readonly IAssetService _assetService;
-        private readonly IAValidatorFactory _validatorFactory;
         public TransactionController(
             ITransactionService transactionService,
-            IAssetService assetService,
-            IAValidatorFactory validatorFactory)
+            IAssetService assetService)
         {
             _transactionService = transactionService;
             _assetService = assetService;
-            _validatorFactory = validatorFactory;
         }
 
         [HttpGet]
@@ -67,14 +64,9 @@ namespace IA.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(IaValidationFilter))]
         public IActionResult Create(TransactionDto transaction)
         {
-            var validator = _validatorFactory.GetValidator(transaction);
-            if (!validator.IsValid())
-            {
-                return new JsonResult(new AjaxResult() { Success = false, Message = validator.Errors() });
-            }
-
             _transactionService.Create(transaction);
             return new JsonResult(new AjaxResult(){ Success = true });
         }
@@ -82,12 +74,6 @@ namespace IA.Controllers
         [HttpPost]
         public IActionResult Update(TransactionDto transaction)
         {
-            var validator = _validatorFactory.GetValidator(transaction);
-            if (!validator.IsValid())
-            {
-                return new JsonResult(new AjaxResult() { Success = false, Message = validator.Errors() });
-            }
-
             _transactionService.Update(transaction);
             return new JsonResult(new AjaxResult() { Success = true });
         }

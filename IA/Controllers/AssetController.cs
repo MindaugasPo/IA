@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
+using IA.Filters;
 using IA.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using Types;
 using Types.DTO;
-using ValidationService;
 
 namespace IA.Controllers
 {
@@ -14,13 +14,10 @@ namespace IA.Controllers
     public class AssetController : Controller
     {
         private readonly IAssetService _assetService;
-        private readonly IAValidatorFactory _validatorFactory;
         public AssetController(
-            IAssetService assetService,
-            IAValidatorFactory validatorFactory)
+            IAssetService assetService)
         {
             _assetService = assetService;
-            _validatorFactory = validatorFactory;
         }
 
         [HttpGet]
@@ -43,26 +40,17 @@ namespace IA.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(IaValidationFilter))]
         public IActionResult Update(AssetDto assetDto)
         {
-            var validator = _validatorFactory.GetValidator(assetDto);
-            if (!validator.IsValid())
-            {
-                return new JsonResult(new AjaxResult() { Success = false, Message = validator.Errors() });
-            }
-
             _assetService.Update(assetDto);
             return new JsonResult(new AjaxResult() { Success = true, Message = "Updated" });
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(IaValidationFilter))]
         public IActionResult Create(AssetDto assetDto)
         {
-            var validator = _validatorFactory.GetValidator(assetDto);
-            if (!validator.IsValid())
-            {
-                return new JsonResult(new AjaxResult(){Success = false, Message = validator.Errors()});
-            }
             _assetService.Create(assetDto);
             return new JsonResult(new AjaxResult(){ Success = true, Message = "Created" });
         }

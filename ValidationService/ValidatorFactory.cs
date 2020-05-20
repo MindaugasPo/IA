@@ -29,7 +29,7 @@ namespace ValidationService
                     return new SigninDtoValidator(signinDto);
 
                 default:
-                    return null;
+                    return new UnknownObjectValidator();
             }
         }
     }
