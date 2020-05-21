@@ -7,20 +7,29 @@
     });
 
     $(document).on("click", ".select-portfolio", function (event) {
-        renderPortfolio($(this).data("portfolio-id"));
+        Ajax(
+            "GET",
+            "/Portfolio/Get",
+            { "id": $(this).data("portfolio-id") },
+            function (result) {
+                if (result) {
+                    $("#portfolio-data-container").html(result);
+                }
+            }
+        );
     });
 
 });
 
-function renderPortfolio(id) {
+function renderAllPortfolios(selectedPortfolio) {
+    var data = {};
+    if (selectedPortfolio) {
+        data = { "selectedPortfolioId": selectedPortfolio };
+    }
     Ajax(
         "GET",
-        "/Portfolio/Get",
-        { "id": id },
-        function (result) {
-            if (result) {
-                $("#portfolio-data-container").html(result);
-            }
-        }
+        "/Portfolio/GetAll",
+        data,
+        fillMain
     );
 }

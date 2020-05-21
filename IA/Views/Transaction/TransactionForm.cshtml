@@ -3,11 +3,27 @@
 
 <div id="transaction-container">
     <form id="transaction-form">
-        <input id="portfolio-id" type="text" class="d-none" name="PortfolioId" value="@Model.PortfolioId"/>
+        @*<input id="portfolio-id" type="text" class="d-none" name="PortfolioId" value="@Model.PortfolioId"/>*@
         <input id="TransactionId" type="text" class="d-none" name="Id" value="@(Model.Transaction != null ? Model.Transaction.Id : Guid.Empty)"/>
         <div class="container">
             <div class="row">
-                <div class="form-group col-4">
+                <div class="form-group col-6">
+                    <label for="PortfolioId">Portfolio</label>
+                    <select id="PortfolioId" name="PortfolioId" class="custom-select">
+                        @foreach (var portfolio in Model.Portfolios)
+                        {
+                            if(Model.PortfolioId == portfolio.Id)
+                            {
+                                <option selected value="@portfolio.Id">@portfolio.Title</option>
+                            }
+                            else
+                            {
+                                <option value="@portfolio.Id">@portfolio.Title</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-6">
                     <label for="AssetId">Asset</label>
                     <select id="AssetId" name="AssetId" class="custom-select">
                         @foreach (var asset in Model.Assets)
@@ -23,7 +39,9 @@
                         }
                     </select>
                 </div>
-                <div class="form-group col-4">
+            </div>
+            <div class="row">
+                <div class="form-group col-6">
                     <label for="TransactionType">TransactionType</label>
                     @if (Model.Transaction != null)
                     {
@@ -40,7 +58,7 @@
                         </select>
                     }
                 </div>
-                <div class="form-group col-4">
+                <div class="form-group col-6">
                     <label for="Currency">Currency</label>
                     @if (Model.Transaction != null)
                     {

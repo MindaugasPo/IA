@@ -19,7 +19,7 @@ namespace IA.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll(Guid? selectedPortfolioId)
         {
             var allPortfolios = _portfolioService.GetAll().OrderByDescending(x => x.CreatedDateUtc).ToList();
 
@@ -33,7 +33,10 @@ namespace IA.Controllers
                 AllPortfolios = allPortfolios.Select(x => new PortfolioVM() {PortfolioId = x.Id, Title = x.Title} ).ToList()
             };
 
-            var selectedPortfolio = _portfolioService.Get(allPortfolios.First().Id);
+            var selectedId = selectedPortfolioId.HasValue && selectedPortfolioId.Value != Guid.Empty
+                ? selectedPortfolioId.Value
+                : allPortfolios.First().Id;
+            var selectedPortfolio = _portfolioService.Get(selectedId);
             var historicPortfolio = _portfolioService.GetHistoricPortfolio(selectedPortfolio.Id);
 
             vm.SelectedPortfolio = new PortfolioVM()

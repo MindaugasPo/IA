@@ -27,11 +27,6 @@
         event.preventDefault();
         event.stopPropagation();
 
-        Ajax(
-            "GET",
-            "/Portfolio/GetAll",
-            {},
-            fillMain
-        );
+        renderAllPortfolios();
     });
 });

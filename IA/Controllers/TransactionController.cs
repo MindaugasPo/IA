@@ -14,12 +14,15 @@ namespace IA.Controllers
     {
         private readonly ITransactionService _transactionService;
         private readonly IAssetService _assetService;
+        private readonly IPortfolioService _portfolioService;
         public TransactionController(
             ITransactionService transactionService,
-            IAssetService assetService)
+            IAssetService assetService,
+            IPortfolioService portfolioService)
         {
             _transactionService = transactionService;
             _assetService = assetService;
+            _portfolioService = portfolioService;
         }
 
         [HttpGet]
@@ -34,7 +37,8 @@ namespace IA.Controllers
             {
                 PortfolioId = transaction.PortfolioId,
                 Assets = _assetService.GetAll().ToList(),
-                Transaction = transaction
+                Transaction = transaction,
+                Portfolios = _portfolioService.GetAll().ToList()
             };
             return PartialView("~/Views/Transaction/TransactionForm.cshtml", vm);
         }
@@ -57,7 +61,8 @@ namespace IA.Controllers
             {
                 PortfolioId = PortfolioId,
                 Assets = _assetService.GetAll().ToList(),
-                Transaction = null
+                Transaction = null,
+                Portfolios = _portfolioService.GetAll().ToList()
             };
             return PartialView("~/Views/Transaction/TransactionForm.cshtml", vm);
         }
