@@ -1,21 +1,26 @@
 ﻿@model IA.ViewModels.PortfolioVM
 
-    <div class="row">
-        <div class="col-12">
-            <h4>Open Positions</h4>
-        </div>
-        <div id="portfolio-transactions-container" class="col-12">
-            <partial name="~/Views/Transaction/AllTransactions.cshtml" model="@new IA.ViewModels.AllTransactionsVM() { Transactions = Model.Transactions, DisplayCloseData = false}" />
-        </div>
-        
-        <div id="historic-portfolio-transactions-container" class="d-none col-12">
-            <div class="row">
-                <div class="col-12">
-                    <h4>Historic Transactions</h4>
-                </div>
-                <div class="col-12">
-                    <partial name="~/Views/Transaction/AllTransactions.cshtml" model="@new IA.ViewModels.AllTransactionsVM() { Transactions = Model.HistoricTransactions, DisplayCloseData = true}" />
-                </div>
+<div class="row">
+    <div class="col-8">
+        <h2>@Model.Title</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <h4>Open Positions</h4>
+    </div>
+    <div id="portfolio-transactions-container" class="col-12">
+        <partial name="~/Views/Transaction/AllTransactions.cshtml" model="@new IA.ViewModels.AllTransactionsVM() { Transactions = Model.Transactions, DisplayCloseData = false}" />
+    </div>
+
+    <div id="historic-portfolio-transactions-container" class="d-none col-12">
+        <div class="row">
+            <div class="col-12">
+                <h4>Historic Transactions</h4>
+            </div>
+            <div class="col-12">
+                <partial name="~/Views/Transaction/AllTransactions.cshtml" model="@new IA.ViewModels.AllTransactionsVM() { Transactions = Model.HistoricTransactions, DisplayCloseData = true}" />
             </div>
         </div>
     </div>
+</div>
