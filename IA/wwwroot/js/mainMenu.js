@@ -29,8 +29,8 @@
 
         Ajax(
             "GET",
-            "/Portfolio/Get",
-            { "id": "3DA15C4C-D24D-4881-94FE-AF666FE835EB" },
+            "/Portfolio/GetAll",
+            {},
             fillMain
         );
     });

@@ -3,7 +3,7 @@
 
 <div id="transaction-container">
     <form id="transaction-form">
-        <input id="PortfolioId" type="text" class="d-none" name="PortfolioId" value="@Model.PortfolioId"/>
+        <input id="portfolio-id" type="text" class="d-none" name="PortfolioId" value="@Model.PortfolioId"/>
         <input id="TransactionId" type="text" class="d-none" name="Id" value="@(Model.Transaction != null ? Model.Transaction.Id : Guid.Empty)"/>
         <div class="container">
             <div class="row">

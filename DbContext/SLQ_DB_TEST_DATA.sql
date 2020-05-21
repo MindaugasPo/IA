@@ -9,7 +9,10 @@ values
 
 insert into Portfolios (Id, Title, CreatedDateUtc)
 values
-('3DA15C4C-D24D-4881-94FE-AF666FE835EB', 'Awesome Portfolio', getdate())
+(newid(), 'Awesome Portfolio', getdate())
+insert into Portfolios (Id, Title, CreatedDateUtc)
+values
+(newid(), 'The second Portfolio', getdate())
 
 declare @assetId uniqueidentifier
 declare @portfolioId uniqueidentifier

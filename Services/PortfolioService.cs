@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Business;
@@ -14,6 +15,7 @@ namespace Services
         PortfolioDto Get(Guid id);
         PortfolioDto GetCurrent(Guid id);
         PortfolioDto GetHistoricPortfolio(Guid id);
+        IEnumerable<PortfolioDto> GetAll();
     }
     public class PortfolioService : BaseService, IPortfolioService
     {
@@ -29,8 +31,6 @@ namespace Services
 
         private Portfolio GetPortfolioWithAllTransactions(Guid id)
         {
-            var l = _context.Portfolios.Include(x => x.Transactions)
-                .ThenInclude(x => x.Asset).ToList();
             return _context.Portfolios
                 .Include(x => x.Transactions)
                 .ThenInclude(x => x.Asset)
@@ -66,6 +66,11 @@ namespace Services
             var portfolioDto = _mapper.Map<Portfolio, PortfolioDto>(portfolio);
             var historicPortfolio = _portfolioBusiness.GetHistoricPortfolio(portfolioDto);
             return historicPortfolio;
+        }
+
+        public IEnumerable<PortfolioDto> GetAll()
+        {
+            return _context.Portfolios.Select(x => _mapper.Map<Portfolio, PortfolioDto>(x)).ToList();
         }
     }
 }

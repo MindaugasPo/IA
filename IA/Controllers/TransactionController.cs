@@ -10,7 +10,6 @@ using Types.DTO;
 
 namespace IA.Controllers
 {
-    [Authorize]
     public class TransactionController : Controller
     {
         private readonly ITransactionService _transactionService;

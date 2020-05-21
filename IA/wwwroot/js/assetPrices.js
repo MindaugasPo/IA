@@ -67,11 +67,7 @@
             "GET",
             "/AssetPrice/Edit",
             { "id": assetPriceId },
-            function (result) {
-                if (result) {
-                    fillMain(result);
-                }
-            }
+            fillMain
         );
     });
 

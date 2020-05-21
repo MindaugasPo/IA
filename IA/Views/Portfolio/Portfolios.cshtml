@@ -1,0 +1,32 @@
+﻿@model IA.ViewModels.AllPortfoliosVM
+
+    <div class="portfolio-container">
+        <input id="portfolio-id" type="text" class="d-none" value="@Model.SelectedPortfolio.PortfolioId" />
+
+        <div class="portfolio-controls row">
+            <div class="col-8">
+                <button id="new-position" class="btn btn-primary">New position</button>
+                <button id="historic-transactions" class="btn btn-primary">Historic transactions</button>
+            </div>
+            <div class="dropdown col-4">
+                <button class="btn btn-secondary dropdown-toggle float-right" type="button" id="other-portfolios" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Other portfolios
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    @foreach (var portfolio in Model.AllPortfolios)
+                    {
+                        <a class="dropdown-item select-portfolio" data-portfolio-id="@portfolio.PortfolioId">@portfolio.Title</a>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <h2>@Model.SelectedPortfolio.Title</h2>
+            </div>
+        </div>
+        
+        <div id="portfolio-data-container">
+            <partial name="~/Views/Portfolio/PortfolioData.cshtml" model="@Model.SelectedPortfolio" />
+        </div>
+    </div>

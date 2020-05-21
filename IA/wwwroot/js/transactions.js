@@ -10,13 +10,14 @@
         submitTransaction("/Transaction/Create");
     });
     function submitTransaction(url) {
+        var portfolioId = $("#transaction-form #portfolio-id").val();
         Ajax("POST",
             url,
             $("#transaction-form").serialize(),
             function (result) {
                 if (result) {
                     if (result.success) {
-                        triggerMainMenu();
+                        renderPortfolio(portfolioId);
                     } else {
                         $("#transaction-form .validation-error").removeClass("d-none");
                         $("#transaction-form .validation-error").text(result.message);
@@ -35,7 +36,7 @@
         Ajax(
             "GET",
             "/Transaction/Create",
-            { "PortfolioId": $("#PortfolioId").val() },
+            { "PortfolioId": $("#portfolio-id").val() },
             fillMain
         );
     });

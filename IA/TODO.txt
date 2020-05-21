@@ -1,0 +1,16 @@
+﻿IA TODO LIST
+- select portfolio
+    - [bug] new transaction for selected portfolio is not displayed when you save it. You need to refresh
+- create portfolio
+- delete portfolio
+- edit portfolio
+- mark portfolio as 'main'
+- make portfolio per user account
+- make portfolio performance calculations
+- integrate payment method (PayPal?)
+- create candlestick chart
+- create technical analysis tools
+- add messages to unauthenticated pages to tell to authenticate
+- add authorization
+- integrate financial data provider to import real data
+- [bug] fix error displaying. If success=false is returned, fillMain does not show the message
