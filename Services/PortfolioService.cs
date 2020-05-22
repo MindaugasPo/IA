@@ -16,6 +16,7 @@ namespace Services
         PortfolioDto GetCurrent(Guid id);
         PortfolioDto GetHistoricPortfolio(Guid id);
         IEnumerable<PortfolioDto> GetAll();
+        void Create(PortfolioDto portfolio);
     }
     public class PortfolioService : BaseService, IPortfolioService
     {
@@ -71,6 +72,13 @@ namespace Services
         public IEnumerable<PortfolioDto> GetAll()
         {
             return _context.Portfolios.Select(x => _mapper.Map<Portfolio, PortfolioDto>(x)).ToList();
+        }
+
+        public void Create(PortfolioDto portfolioDto)
+        {
+            var portfolio = _mapper.Map<PortfolioDto, Portfolio>(portfolioDto);
+            _context.Portfolios.Add(portfolio);
+            _context.SaveChanges();
         }
     }
 }

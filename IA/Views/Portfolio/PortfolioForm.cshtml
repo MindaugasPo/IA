@@ -1,0 +1,22 @@
+﻿@model IA.ViewModels.PortfolioFormVM
+
+    <div id="portfolio-form-container">
+        <form id="portfolio-form">
+            <input id="portfolio-id" type="text" class="d-none" name="Id" value="@(Model.PortfolioId)" />
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input id="title" type="text" class="form-control" name="title" value="@(Model.Title)" />
+            </div>
+            <div>
+                <label class="validation-error d-none"></label>
+            </div>
+            @if (Model.NewPortfolio)
+            {
+                <button id="submit-portfolio-create-form" class="btn btn-primary">Create</button>
+            }
+            else
+            {
+                <button id="submit-portfolio-update-form" class="btn btn-primary">Update</button>
+            }
+        </form>
+    </div>

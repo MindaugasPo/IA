@@ -28,6 +28,9 @@ namespace ValidationService
                 case SigninDto signinDto:
                     return new SigninDtoValidator(signinDto);
 
+                case PortfolioDto portfolioDto:
+                    return new PortfolioDtoValidator(portfolioDto);
+
                 default:
                     return new UnknownObjectValidator();
             }

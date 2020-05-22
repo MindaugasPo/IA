@@ -89,3 +89,7 @@ main a {
 .validation-error {
     color: red;
 }
+
+#create-portfolio {
+    margin-left: 5px;
+}

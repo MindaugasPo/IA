@@ -19,6 +19,39 @@
         );
     });
 
+    $(document).on("click", "#submit-portfolio-create-form", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        var portfolioId = $("#portfolio-form #portfolio-id").val();
+        Ajax(
+            "POST",
+            "/Portfolio/Create",
+            $("#portfolio-form").serialize(),
+            function (result) {
+                if (result) {
+                    if (result.success) {
+                        renderAllPortfolios(portfolioId);
+                    } else {
+                        $("#portfolio-form .validation-error").removeClass("d-none");
+                        $("#portfolio-form .validation-error").text(result.message);
+                    }
+                } else {
+                    $("#portfolio-form .validation-error").text("Something went wrong");
+                }
+            }
+        );
+    });
+
+    $(document).on("click", "#create-portfolio", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        Ajax(
+            "GET",
+            "/Portfolio/Create",
+            {},
+            fillMain
+        );
+    });
 });
 
 function renderAllPortfolios(selectedPortfolio) {

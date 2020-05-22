@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using IA.Filters;
 using IA.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,27 @@ namespace IA.Controllers
         public PortfolioController(IPortfolioService portfolioService)
         {
             _portfolioService = portfolioService;
+        }
+
+        [HttpPost]
+        [ServiceFilter(typeof(IaValidationFilter))]
+        public IActionResult Create(PortfolioDto portfolio)
+        {
+            portfolio.Transactions = new List<TransactionDto>();
+            _portfolioService.Create(portfolio);
+            return new JsonResult(new AjaxResult() { Success = true, Message = "Created" });
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+           var vm = new PortfolioFormVM()
+           {
+               PortfolioId = Guid.NewGuid(), 
+               Title = "", 
+               NewPortfolio = true
+           };
+            return PartialView("~/Views/Portfolio/PortfolioForm.cshtml", vm);
         }
 
         [HttpGet]
@@ -36,7 +58,7 @@ namespace IA.Controllers
             var selectedId = selectedPortfolioId.HasValue && selectedPortfolioId.Value != Guid.Empty
                 ? selectedPortfolioId.Value
                 : allPortfolios.First().Id;
-            var selectedPortfolio = _portfolioService.GetCurrent(selectedId);
+            var selectedPortfolio = _portfolioService.GetCurrent(selectedId) ?? _portfolioService.GetCurrent(allPortfolios.First().Id);
             var historicPortfolio = _portfolioService.GetHistoricPortfolio(selectedPortfolio.Id);
 
             vm.SelectedPortfolio = new PortfolioVM()
