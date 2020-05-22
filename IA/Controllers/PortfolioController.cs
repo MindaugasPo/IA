@@ -36,7 +36,7 @@ namespace IA.Controllers
             var selectedId = selectedPortfolioId.HasValue && selectedPortfolioId.Value != Guid.Empty
                 ? selectedPortfolioId.Value
                 : allPortfolios.First().Id;
-            var selectedPortfolio = _portfolioService.Get(selectedId);
+            var selectedPortfolio = _portfolioService.GetCurrent(selectedId);
             var historicPortfolio = _portfolioService.GetHistoricPortfolio(selectedPortfolio.Id);
 
             vm.SelectedPortfolio = new PortfolioVM()
@@ -53,7 +53,7 @@ namespace IA.Controllers
         [HttpGet]
         public IActionResult Get(Guid id)
         {
-            var portfolio = _portfolioService.Get(id);
+            var portfolio = _portfolioService.GetCurrent(id);
             var historicPortfolio = _portfolioService.GetHistoricPortfolio(id);
             var vm = new PortfolioVM()
             {

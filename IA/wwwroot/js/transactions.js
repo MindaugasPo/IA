@@ -67,14 +67,14 @@
 
         var transactionId = $(this).data("transaction-id");
         var closePrice = $("#close-price-" + transactionId).val();
-
+        var portfolioId = $("#portfolio-id").val();
         Ajax(
             "POST",
             "/Transaction/Close",
             { "id": transactionId, "closePrice": closePrice },
             function (result) {
                 if (result) {
-                    $("#tr-" + transactionId).remove();
+                    renderAllPortfolios(portfolioId);
                 } else {
                     fillMain("Closing transaction failed");
                 }
