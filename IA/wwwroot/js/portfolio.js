@@ -1,4 +1,22 @@
 ﻿$(document).ready(function () {
+    $(document).on("click", "#delete-portfolio", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        var portfolioId = $("#portfolio-id").val();
+
+        Ajax(
+            "POST",
+            "/Portfolio/Delete",
+            { "id": portfolioId },
+            function(result) {
+                if (result) {
+                    renderAllPortfolios();
+                }
+            }
+        );
+    });
+
     $(document).on("click", "#edit-portfolio", function (event) {
         event.preventDefault();
         event.stopPropagation();

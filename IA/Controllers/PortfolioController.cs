@@ -20,6 +20,13 @@ namespace IA.Controllers
         }
 
         [HttpPost]
+        public IActionResult Delete(Guid id)
+        {
+            _portfolioService.Delete(id);
+            return new JsonResult(new AjaxResult() { Success = true, Message = "Deleted" });
+        }
+
+        [HttpPost]
         [ServiceFilter(typeof(IaValidationFilter))]
         public IActionResult Update(PortfolioDto portfolio)
         {
@@ -65,31 +72,29 @@ namespace IA.Controllers
         public IActionResult GetAll(Guid? selectedPortfolioId)
         {
             var allPortfolios = _portfolioService.GetAll().OrderByDescending(x => x.CreatedDateUtc).ToList();
-
-            if (!allPortfolios.Any())
-            {
-                return new JsonResult(new AjaxResult() { Success = false, Message = "No portfolios were found" });
-            }
-
+            
             var vm = new AllPortfoliosVM()
             {
                 AllPortfolios = allPortfolios.Select(x => new PortfolioVM() {PortfolioId = x.Id, Title = x.Title} ).ToList()
             };
 
-            var selectedId = selectedPortfolioId.HasValue && selectedPortfolioId.Value != Guid.Empty
-                ? selectedPortfolioId.Value
-                : allPortfolios.First().Id;
-            var selectedPortfolio = _portfolioService.GetCurrent(selectedId) ?? _portfolioService.GetCurrent(allPortfolios.First().Id);
-            var historicPortfolio = _portfolioService.GetHistoricPortfolio(selectedPortfolio.Id);
-
-            vm.SelectedPortfolio = new PortfolioVM()
+            if (allPortfolios.Any())
             {
-                PortfolioId = selectedPortfolio.Id,
-                Title = selectedPortfolio.Title,
-                Transactions = selectedPortfolio.Transactions,
-                HistoricTransactions = historicPortfolio?.Transactions ?? new List<TransactionDto>()
-            };
+                var selectedId = selectedPortfolioId.HasValue && selectedPortfolioId.Value != Guid.Empty
+                    ? selectedPortfolioId.Value
+                    : allPortfolios.First().Id;
+                var selectedPortfolio = _portfolioService.GetCurrent(selectedId) ?? _portfolioService.GetCurrent(allPortfolios.First().Id);
+                var historicPortfolio = _portfolioService.GetHistoricPortfolio(selectedPortfolio.Id);
 
+                vm.SelectedPortfolio = new PortfolioVM()
+                {
+                    PortfolioId = selectedPortfolio.Id,
+                    Title = selectedPortfolio.Title,
+                    Transactions = selectedPortfolio.Transactions,
+                    HistoricTransactions = historicPortfolio?.Transactions ?? new List<TransactionDto>()
+                };
+            }
+            
             return PartialView("~/Views/Portfolio/Portfolios.cshtml", vm);
         }
 

@@ -18,6 +18,7 @@ namespace Services
         IEnumerable<PortfolioDto> GetAll();
         void Create(PortfolioDto portfolio);
         void Update(PortfolioDto portfolioDto);
+        void Delete(Guid id);
     }
     public class PortfolioService : BaseService, IPortfolioService
     {
@@ -91,6 +92,26 @@ namespace Services
             }
 
             portfolio.Title = portfolioDto.Title;
+            _context.SaveChanges();
+        }
+
+        public void Delete(Guid id)
+        {
+            var portfolio = _context.Portfolios
+                .Include(x => x.Transactions)
+                .SingleOrDefault(x => x.Id == id);
+
+            if (portfolio == null)
+            {
+                return;
+            }
+
+            foreach (var portfolioTransaction in portfolio.Transactions)
+            {
+                _context.Transactions.Remove(portfolioTransaction);
+            }
+
+            _context.Portfolios.Remove(portfolio);
             _context.SaveChanges();
         }
     }
