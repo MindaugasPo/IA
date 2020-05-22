@@ -21,6 +21,27 @@ namespace IA.Controllers
 
         [HttpPost]
         [ServiceFilter(typeof(IaValidationFilter))]
+        public IActionResult Update(PortfolioDto portfolio)
+        {
+            _portfolioService.Update(portfolio);
+            return new JsonResult(new AjaxResult() { Success = true, Message = "Created" });
+        }
+
+        [HttpGet]
+        public IActionResult Edit(Guid id)
+        {
+            var portfolio = _portfolioService.Get(id);
+            var vm = new PortfolioFormVM()
+            {
+                PortfolioId = portfolio.Id,
+                Title = portfolio.Title,
+                NewPortfolio = false
+            };
+            return PartialView("~/Views/Portfolio/PortfolioForm.cshtml", vm);
+        }
+
+        [HttpPost]
+        [ServiceFilter(typeof(IaValidationFilter))]
         public IActionResult Create(PortfolioDto portfolio)
         {
             portfolio.Transactions = new List<TransactionDto>();

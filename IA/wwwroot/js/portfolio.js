@@ -1,4 +1,18 @@
 ﻿$(document).ready(function () {
+    $(document).on("click", "#edit-portfolio", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        var portfolioId = $("#portfolio-id").val();
+
+        Ajax(
+            "GET",
+            "/Portfolio/Edit",
+            { "id": portfolioId },
+            fillMain
+        );
+    });
+
     $(document).on("click", "#historic-transactions", function (event) {
         event.preventDefault();
         event.stopPropagation();
@@ -22,10 +36,22 @@
     $(document).on("click", "#submit-portfolio-create-form", function (event) {
         event.preventDefault();
         event.stopPropagation();
+
+        submitPortfolio("/Portfolio/Create");
+    });
+
+    $(document).on("click", "#submit-portfolio-update-form", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        submitPortfolio("/Portfolio/Update");
+    });
+
+    function submitPortfolio(url) {
         var portfolioId = $("#portfolio-form #portfolio-id").val();
         Ajax(
             "POST",
-            "/Portfolio/Create",
+            url,
             $("#portfolio-form").serialize(),
             function (result) {
                 if (result) {
@@ -40,7 +66,7 @@
                 }
             }
         );
-    });
+    }
 
     $(document).on("click", "#create-portfolio", function (event) {
         event.preventDefault();
