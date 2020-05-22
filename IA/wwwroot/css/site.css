@@ -93,3 +93,7 @@ main a {
 #create-portfolio {
     margin-left: 5px;
 }
+
+.portfolio-controls button {
+    margin-bottom: 5px;
+}
