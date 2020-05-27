@@ -1,10 +1,4 @@
 ﻿IA TODO LIST
-- select portfolio
-    - [bug] new transaction for selected portfolio is not displayed when you save it. You need to refresh
-- create portfolio
-- delete portfolio
-- edit portfolio
-- mark portfolio as 'main'
 - make portfolio per user account
 - make portfolio performance calculations
 - integrate payment method (PayPal?)

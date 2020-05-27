@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Types.Entities
 {
@@ -6,5 +7,7 @@ namespace Types.Entities
     {
         public string Title { get; set; }
         public List<Transaction> Transactions { get; set; }
+        public string UserId { get; set; }
+        public User User { get; set; }
     }
 }

@@ -208,3 +208,22 @@ update [IA].[dbo].[Version]
 set [Value] = 4
 where [Key] = 'DbVersion'
 GO
+
+-- IMPORTANT !
+-- This DELETE code should not be run in actual prod system, as it deletes existing portfolios.
+-- better is to add nullable column, populate it (however it is suitable for your deployment),
+-- add roreign key constraint, and make the column non nullable.
+DELETE FROM [IA].[dbo].[Portfolios] 
+GO
+
+ALTER TABLE [IA].[dbo].[Portfolios] 
+ADD UserId nvarchar(450) not null
+
+ALTER TABLE [IA].[dbo].[Portfolios] WITH CHECK ADD  CONSTRAINT [FK_Portfolios_AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [IA].[dbo].[AspNetUsers] ([Id])
+GO
+
+update [IA].[dbo].[Version]
+set [Value] = 5
+where [Key] = 'DbVersion'
+GO
