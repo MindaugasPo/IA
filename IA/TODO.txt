@@ -1,8 +1,14 @@
 ﻿IA TODO LIST
-- make portfolio per user account
 - make portfolio performance calculations
+    - each position's (asset's) portfolio performance
+    - portfolio's cost
+    - portfolio's market value
+    - portfolio's revenue
+    - all of the above for each position
+    - all of the above calculated for each day historically
+    - asset allocation
 - integrate payment method (PayPal?)
-- create candlestick chart
+- create candlestick chart?
 - create technical analysis tools
 - add messages to unauthenticated pages to tell to authenticate
 - add authorization
