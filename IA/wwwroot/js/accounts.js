@@ -64,7 +64,9 @@
             "POST",
             "/Account/Register",
             $("#register-form").serialize(),
-            function(result) {
+            function (result) {
+                $("#registration-errors").html("");
+                $("#register-failure-container").addClass("d-none");
                 if (result) {
                     if (result.success) {
                         $("#register-form-container").addClass("d-none");

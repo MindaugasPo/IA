@@ -12,6 +12,7 @@ namespace ValidationService
         :base(portfolio)
         {
             RuleFor(x => x.Title).NotEmpty().MaximumLength(50);
+            RuleFor(x => x.UserId).NotEmpty().MaximumLength(450);
         }
     }
 }

@@ -11,10 +11,10 @@ namespace Services
 {
     public interface ITransactionService
     {
-        IEnumerable<TransactionDto> GetAll();
+        IEnumerable<TransactionDto> GetAll(string userId);
         void Create(TransactionDto transactionDto);
         void Update(TransactionDto transactionDto);
-        void Close(Guid id, decimal closePrice);
+        void Close(Guid id, decimal closePrice, DateTime closeDate);
         void Delete(Guid id);
         TransactionDto Get(Guid id);
     }
@@ -27,10 +27,12 @@ namespace Services
         {
         }
 
-        public IEnumerable<TransactionDto> GetAll()
+        public IEnumerable<TransactionDto> GetAll(string userId)
         {
             return _context.Transactions
                 .Include(x => x.Asset)
+                .Include(x => x.Portfolio)
+                .Where(x => x.Portfolio.UserId == userId)
                 .Select(x => _mapper.Map<Transaction, TransactionDto>(x));
         }
 
@@ -63,12 +65,12 @@ namespace Services
             _context.SaveChanges();
         }
 
-        public void Close(Guid id, decimal closePrice)
+        public void Close(Guid id, decimal closePrice, DateTime closeDate)
         {
             var transaction = _context.Transactions.SingleOrDefault(x => x.Id == id);
             if (transaction != null)
             {
-                transaction.CloseDateUtc = DateTime.UtcNow;
+                transaction.CloseDateUtc = closeDate;
                 transaction.ClosePrice = closePrice;
             }
             _context.SaveChanges();
@@ -86,7 +88,9 @@ namespace Services
 
         public TransactionDto Get(Guid id)
         {
-            var transaction = _context.Transactions.SingleOrDefault(x => x.Id == id);
+            var transaction = _context.Transactions
+                .Include(x => x.Portfolio)
+                .SingleOrDefault(x => x.Id == id);
             TransactionDto transactionDto = null;
 
             if (transaction != null)

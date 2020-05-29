@@ -15,5 +15,6 @@ namespace Types.DTO
         public Guid AssetId { get; set; }
         public AssetDto Asset { get; set; }
         public Guid PortfolioId { get; set; }
+        public PortfolioDto Portfolio { get; set; }
     }
 }

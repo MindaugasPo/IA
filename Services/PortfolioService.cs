@@ -15,7 +15,7 @@ namespace Services
         PortfolioDto Get(Guid id);
         PortfolioDto GetCurrent(Guid id);
         PortfolioDto GetHistoricPortfolio(Guid id);
-        IEnumerable<PortfolioDto> GetAll();
+        IEnumerable<PortfolioDto> GetAll(string userId);
         void Create(PortfolioDto portfolio);
         void Update(PortfolioDto portfolioDto);
         void Delete(Guid id);
@@ -71,9 +71,11 @@ namespace Services
             return historicPortfolio;
         }
 
-        public IEnumerable<PortfolioDto> GetAll()
+        public IEnumerable<PortfolioDto> GetAll(string userId)
         {
-            return _context.Portfolios.Select(x => _mapper.Map<Portfolio, PortfolioDto>(x)).ToList();
+            return _context.Portfolios
+                .Where(x => x.UserId == userId)
+                .Select(x => _mapper.Map<Portfolio, PortfolioDto>(x)).ToList();
         }
 
         public void Create(PortfolioDto portfolioDto)

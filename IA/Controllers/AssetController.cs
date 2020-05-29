@@ -10,6 +10,7 @@ using Types.DTO;
 
 namespace IA.Controllers
 {
+    [Authorize]
     public class AssetController : Controller
     {
         private readonly IAssetService _assetService;

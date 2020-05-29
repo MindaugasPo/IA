@@ -11,10 +11,7 @@
                 <th>Amount</th>
                 <th>Commission</th>
                 <th>Currency</th>
-                @if (Model.DisplayCloseData)
-                {
-                    <th>Close Date (UTC)</th>
-                }
+                <th>Close Date (UTC)</th>
                 <th>Close Price</th>
                 <th>@* Close *@</th>
                 <th>@* Edit *@</th>
@@ -33,18 +30,15 @@
                 <td>@transaction.Commission</td>
                 <td>@transaction.Currency</td>
 
-                @if (Model.DisplayCloseData)
-                {
-                    <td>@transaction.CloseDateUtc</td>
-                }
-
                 @if (transaction.CloseDateUtc == null)
                 {
+                    <td><input id="@("close-date-" + transaction.Id)" type="text" class="form-control date-control" value="@DateTime.UtcNow.ToShortDateString()"></td>
                     <td><input id="@("close-price-" + transaction.Id)" type="text" class="form-control"></td>
                     <td><button type="button" class="btn btn-link close-position" data-transaction-id="@transaction.Id">Close</button></td>
                 }
                 else
                 {
+                    <td>@transaction.CloseDateUtc.Value.ToShortDateString()</td>
                     <td>@transaction.ClosePrice</td>
                     <td>@* Close *@</td>
                 }

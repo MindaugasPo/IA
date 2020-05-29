@@ -5,10 +5,18 @@
             <div class="col-6">
                 @if (Model.SelectedPortfolio != null)
                 {
-                    <button id="new-position" class="btn btn-primary">New position</button>
-                    <button id="historic-transactions" class="btn btn-primary">Historic transactions</button>
-                    <button id="edit-portfolio" class="btn btn-primary">Edit portfolio</button>
-                    <button id="delete-portfolio" class="btn btn-primary">Delete portfolio</button>
+                    <div class="row">
+                        <div class="col-12">
+                            <button id="edit-portfolio" class="btn btn-primary">Edit portfolio</button>
+                            <button id="delete-portfolio" class="btn btn-primary">Delete portfolio</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <button id="new-position" class="btn btn-primary">New position</button>
+                            <button id="historic-transactions" class="btn btn-primary">Historic transactions</button>
+                        </div>
+                    </div>
                 }
             </div>
             <div class="dropdown col-6">

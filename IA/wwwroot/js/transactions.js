@@ -67,11 +67,12 @@
 
         var transactionId = $(this).data("transaction-id");
         var closePrice = $("#close-price-" + transactionId).val();
+        var closeDate = $("#close-date-" + transactionId).val();
         var portfolioId = $("#portfolio-id").val();
         Ajax(
             "POST",
             "/Transaction/Close",
-            { "id": transactionId, "closePrice": closePrice },
+            { "id": transactionId, "closePrice": closePrice, "closeDate": closeDate },
             function (result) {
                 if (result) {
                     renderAllPortfolios(portfolioId);

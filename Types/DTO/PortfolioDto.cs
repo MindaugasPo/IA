@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Types.Entities;
 
 namespace Types.DTO
 {
@@ -6,6 +7,7 @@ namespace Types.DTO
     {
         public string Title { get; set; }
         public List<TransactionDto> Transactions { get; set; }
-
+        public string UserId { get; set; }
+        public User User { get; set; }
     }
 }

@@ -97,3 +97,11 @@ main a {
 .portfolio-controls button {
     margin-bottom: 5px;
 }
+
+.portfolio-controls button {
+    width: 170px;
+}
+
+.form-control.date-control {
+    width: 115px;
+}

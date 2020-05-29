@@ -1,22 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using IA.Filters;
 using IA.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 using Types;
 using Types.DTO;
+using Types.Entities;
 
 namespace IA.Controllers
 {
+    [Authorize]
     public class PortfolioController : Controller
     {
         private readonly IPortfolioService _portfolioService;
-        public PortfolioController(IPortfolioService portfolioService)
+        private readonly UserManager<User> _userManager;
+        public PortfolioController(
+            IPortfolioService portfolioService,
+            UserManager<User> userManager)
         {
             _portfolioService = portfolioService;
+            _userManager = userManager;
         }
 
         [HttpPost]
@@ -35,43 +43,57 @@ namespace IA.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(Guid id)
+        public async Task<IActionResult> Edit(Guid id)
         {
             var portfolio = _portfolioService.Get(id);
+            var user = await _userManager.GetUserAsync(User);
+            if (portfolio.UserId != user.Id)
+            {
+                return new JsonResult(new AjaxResult() { Success = false, Message = "Portfolio belongs to another user" });
+            }
             var vm = new PortfolioFormVM()
             {
                 PortfolioId = portfolio.Id,
                 Title = portfolio.Title,
-                NewPortfolio = false
+                NewPortfolio = false,
+                UserId = user.Id
             };
             return PartialView("~/Views/Portfolio/PortfolioForm.cshtml", vm);
         }
 
         [HttpPost]
         [ServiceFilter(typeof(IaValidationFilter))]
-        public IActionResult Create(PortfolioDto portfolio)
+        public async Task<IActionResult> Create(PortfolioDto portfolio)
         {
+            var user = await _userManager.GetUserAsync(User);
+            if (portfolio.UserId != user.Id)
+            {
+                return new JsonResult(new AjaxResult() { Success = false, Message = "Unable to create portfolio for another user" });
+            }
             portfolio.Transactions = new List<TransactionDto>();
             _portfolioService.Create(portfolio);
             return new JsonResult(new AjaxResult() { Success = true, Message = "Created" });
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-           var vm = new PortfolioFormVM()
-           {
+            var user = await _userManager.GetUserAsync(User);
+            var vm = new PortfolioFormVM()
+            {
                PortfolioId = Guid.NewGuid(), 
                Title = "", 
-               NewPortfolio = true
-           };
+               NewPortfolio = true,
+               UserId = user.Id
+            };
             return PartialView("~/Views/Portfolio/PortfolioForm.cshtml", vm);
         }
 
         [HttpGet]
-        public IActionResult GetAll(Guid? selectedPortfolioId)
+        public async Task<IActionResult> GetAll(Guid? selectedPortfolioId)
         {
-            var allPortfolios = _portfolioService.GetAll().OrderByDescending(x => x.CreatedDateUtc).ToList();
+            var user = await _userManager.GetUserAsync(User);
+            var allPortfolios = _portfolioService.GetAll(user.Id).OrderByDescending(x => x.CreatedDateUtc).ToList();
             
             var vm = new AllPortfoliosVM()
             {
@@ -99,9 +121,14 @@ namespace IA.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get(Guid id)
+        public async Task<IActionResult> Get(Guid id)
         {
+            var user = await _userManager.GetUserAsync(User);
             var portfolio = _portfolioService.GetCurrent(id);
+            if (portfolio.UserId != user.Id)
+            {
+                return new JsonResult(new AjaxResult() { Success = false, Message = "Unable to create portfolio for another user" });
+            }
             var historicPortfolio = _portfolioService.GetHistoricPortfolio(id);
             var vm = new PortfolioVM()
             {
