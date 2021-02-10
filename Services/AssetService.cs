@@ -12,7 +12,7 @@ namespace Services
     {
         AssetDto Get(Guid id);
         IEnumerable<AssetDto> GetAll();
-        void Create(AssetDto assetDto);
+        AssetDto Create(AssetDto assetDto);
         void Update(AssetDto assetDto);
     }
     public class AssetService : BaseService, IAssetService
@@ -41,11 +41,14 @@ namespace Services
             return _context.Assets.Select(x => _mapper.Map<Asset, AssetDto>(x)).ToList();
         }
 
-        public void Create(AssetDto assetDto)
+        public AssetDto Create(AssetDto assetDto)
         {
+            assetDto.Id = Guid.NewGuid();
+            assetDto.CreatedDateUtc = DateTime.UtcNow;
             var asset = _mapper.Map<AssetDto, Asset>(assetDto);
             _context.Assets.Add(asset);
             _context.SaveChanges();
+            return assetDto;
         }
 
         public void Update(AssetDto assetDto)

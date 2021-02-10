@@ -26,5 +26,12 @@ namespace IA.Controllers
         {
             return _assetService.GetAll();
         }
+
+        [HttpPost]
+        public AssetDto Post(AssetDto newAsset)
+        {
+            var createdAsset = _assetService.Create(newAsset);
+            return createdAsset;
+        }
     }
 }
