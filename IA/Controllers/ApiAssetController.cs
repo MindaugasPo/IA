@@ -33,5 +33,11 @@ namespace IA.Controllers
             var createdAsset = _assetService.Create(newAsset);
             return createdAsset;
         }
+
+        [HttpDelete]
+        public void Delete(Guid id)
+        {
+            _assetService.Delete(id);
+        }
     }
 }

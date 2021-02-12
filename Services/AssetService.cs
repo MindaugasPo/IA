@@ -14,6 +14,7 @@ namespace Services
         IEnumerable<AssetDto> GetAll();
         AssetDto Create(AssetDto assetDto);
         void Update(AssetDto assetDto);
+        void Delete(Guid id);
     }
     public class AssetService : BaseService, IAssetService
     { 
@@ -63,6 +64,16 @@ namespace Services
             }
 
             _context.SaveChanges();
+        }
+
+        public void Delete(Guid id)
+        {
+            var existingAsset = _context.Assets.SingleOrDefault(x => x.Id == id);
+            if (existingAsset != null)
+            {
+                _context.Assets.Remove(existingAsset);
+                _context.SaveChanges();
+            }
         }
     }
 }

@@ -10,8 +10,8 @@ values
 (newid(), 'Apple', 'AAPL', 1, getdate()),
 (newid(), 'Tesla', 'TSLA', 1, getdate()),
 (newid(), 'Amazon', 'AMZN', 1, getdate()),
-(newid(), 'Gold', 'XAU', 2, getdate()),
-(newid(), 'Silver', 'XAG', 2, getdate())
+(newid(), 'Gold', 'XAU', 3, getdate()),
+(newid(), 'Silver', 'XAG', 3, getdate())
 
 declare @assetId uniqueidentifier
 set @assetId = (select Id from Assets where [Title]='Microsoft')
