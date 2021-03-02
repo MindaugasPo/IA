@@ -15,6 +15,7 @@ namespace Services
         AssetDto Create(AssetDto assetDto);
         void Update(AssetDto assetDto);
         void Delete(Guid id);
+        IEnumerable<AssetDto> Search(string searchString);
     }
     public class AssetService : BaseService, IAssetService
     { 
@@ -74,6 +75,14 @@ namespace Services
                 _context.Assets.Remove(existingAsset);
                 _context.SaveChanges();
             }
+        }
+
+        public IEnumerable<AssetDto> Search(string searchString)
+        {
+            return _context.Assets
+                .Where(x => x.Ticker.Contains(searchString) || x.Title.Contains(searchString))
+                .Select(x => _mapper.Map<AssetDto>(x))
+                .ToList();
         }
     }
 }

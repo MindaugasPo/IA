@@ -31,9 +31,17 @@ namespace IAapi.Controllers
         }
 
         [HttpDelete]
+        [Route("delete/{id}")]
         public void Delete(Guid id)
         {
             _assetService.Delete(id);
+        }
+
+        [HttpGet]
+        [Route("search/{searchString}")]
+        public IEnumerable<AssetDto> Search(string searchString)
+        {
+            return _assetService.Search(searchString);
         }
     }
 }
