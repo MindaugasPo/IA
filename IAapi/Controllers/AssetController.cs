@@ -43,5 +43,12 @@ namespace IAapi.Controllers
         {
             return _assetService.Search(searchString);
         }
+
+        [HttpPost]
+        [Route("Update")]
+        public AssetDto Update(AssetDto assetDto)
+        {
+            return _assetService.Update(assetDto);
+        }
     }
 }

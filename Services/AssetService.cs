@@ -13,7 +13,7 @@ namespace Services
         AssetDto Get(Guid id);
         IEnumerable<AssetDto> GetAll();
         AssetDto Create(AssetDto assetDto);
-        void Update(AssetDto assetDto);
+        AssetDto Update(AssetDto assetDto);
         void Delete(Guid id);
         IEnumerable<AssetDto> Search(string searchString);
     }
@@ -53,18 +53,19 @@ namespace Services
             return assetDto;
         }
 
-        public void Update(AssetDto assetDto)
+        public AssetDto Update(AssetDto assetDto)
         {
-            var newAsset = _mapper.Map<AssetDto, Asset>(assetDto);
             var existingAsset = _context.Assets.SingleOrDefault(x => x.Id == assetDto.Id);
             if (existingAsset != null)
             {
-                existingAsset.Title = newAsset.Title;
-                existingAsset.Ticker = newAsset.Ticker;
-                existingAsset.AssetType = newAsset.AssetType;
+                existingAsset.Title = assetDto.Title;
+                existingAsset.Ticker = assetDto.Ticker;
+                existingAsset.AssetType = assetDto.AssetType;
+                _context.SaveChanges();
+                return _mapper.Map<AssetDto>(existingAsset);
             }
 
-            _context.SaveChanges();
+            return null;
         }
 
         public void Delete(Guid id)
