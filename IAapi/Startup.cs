@@ -11,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Business;
+using IAapi.Filters;
 using IADbContext;
 using Microsoft.EntityFrameworkCore;
 using Services;
@@ -43,6 +45,7 @@ namespace IAapi
             services.AddAutoMapper(typeof(AutoMapperConfigurations));
 
             RegisterDbContexts(services);
+            RegisterIaFilters(services);
 
             RegisterIaServices(services);
 
@@ -92,7 +95,13 @@ namespace IAapi
 
         private void RegisterIaServices(IServiceCollection services)
         {
+            services.AddScoped<IPortfolioBusiness, PortfolioBusiness>();
             services.AddScoped<IAssetService, AssetService>();
+            services.AddScoped<IPortfolioService, PortfolioService>();
+        }
+        private void RegisterIaFilters(IServiceCollection services)
+        {
+            services.AddScoped<IaValidationFilter>();
         }
     }
 }

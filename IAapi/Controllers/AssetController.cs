@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using IAapi.Filters;
 using Services;
 using Types.DTO;
 
@@ -24,7 +25,9 @@ namespace IAapi.Controllers
         }
 
         [HttpPost]
-        public AssetDto Post(AssetDto newAsset)
+        [Route("create")]
+        [ServiceFilter(typeof(IaValidationFilter))]
+        public AssetDto Create(AssetDto newAsset)
         {
             var createdAsset = _assetService.Create(newAsset);
             return createdAsset;
