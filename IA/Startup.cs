@@ -1,3 +1,4 @@
+using System.Text;
 using IADbContext;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,7 +9,9 @@ using Microsoft.Extensions.Hosting;
 using AutoMapper;
 using Business;
 using IA.Filters;
+using IA.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using Services;
 using Types.Entities;
 using ValidationService;
@@ -18,6 +21,8 @@ namespace IA
     public class Startup
     {
         private readonly IWebHostEnvironment _env;
+        private const string SecretKey = "03a0f6cfd4904b928b5ecde32aff0f62"; // todo - put this to a secure place 
+        private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
@@ -35,6 +40,14 @@ namespace IA
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             }));
+
+            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+            services.Configure<JwtIssuerOptions>(options =>
+            {
+                options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+                options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
+                options.SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256);
+            });
 
             services.AddRazorPages()
                 .AddRazorRuntimeCompilation();
